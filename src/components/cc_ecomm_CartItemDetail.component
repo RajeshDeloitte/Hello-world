@@ -1,0 +1,204 @@
+<!--
+<Summary>
+--------------------------------------------------------------------------------------------------------------------------------
+Author                                  Date                                            Description
+
+---------------------------------------------------------------------------------------------------------------------------------
+Rajesh Kumar                           09/11/2016                       Display User based and Usage based Prices for Sage service Products on Cart Item's section
+
+Pulkit Dua                             17/11/2016                       Hiding shopping cart image from the component.                   
+
+-->
+<apex:component allowDML="true">
+<script id="cc_ecomm_CartItemDetail-View-Desktop" type="text/template">
+  {{#with this.attributes}}
+   {{#ifEquals itemStatus 'Invalid'}}
+    <div class="alert alert-error">
+     <p class="item_title">
+         {{#if displayProductBean.sku}}
+                        <a href="#" class="prodLink" data-id="{{displayProductBean.sku}}">{{displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name }}</a>
+                    {{else}}
+                        <a href="#" class="prodLink" data-id="{{mockProduct.sku}}">{{displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name }}</a>
+                    {{/if}}
+     </p>
+                    <p><span><strong>{{pageLabelMap 'SKU'}}:</strong> {{mockProduct.sku}}</span></p>
+                     {{#if showSubProdTerm}}
+                        <p><label class="subscriptionSummary">{{insertTokens cartDisplayName displayName (price price) (price SubAmount) (price recurringPrice) (price recurringPriceSubAmount) (pageLabelPrefixMap 'Subscriptions_Frequency_' orderFrequencyUOM) (pageLabelPrefixMap 'Subscriptions_Frequency_' installmentFrequencyUOM) orderFrequency installmentFrequency installmentCount orderCount}}</span></label></p>
+                    {{/if}}           
+     <div class="clear"></div>
+     <button type="button" class="btn slim deleteItem removeItemButton" data-dismiss="modal" aria-hidden="true" data-id="{{itemID}}" >{{pageLabelMap 'Action_Delete'}}</button>
+    </div>
+   {{else}}
+
+    <div class="quantity" data-id="{{itemID}}">
+     {{#ifNotEquals cartItemType 'Coupon'}}
+      <p class="section2 plus_minus" data-id="{{itemID}}">
+       {{> cartItemsQty}}
+      </p>
+     {{/ifNotEquals}}
+     <div class="price">
+      <p class="price">
+       {{#if price}}
+        {{pageLabelMap 'CartInc_Price'}}: ${{calcUnitPrice quantity price absoluteDiscount itemTotal}} <br />
+       {{/if}}
+       {{#if absoluteDiscount}}
+        <span>{{pageLabelMap 'YouSave'}}: {{{price absoluteDiscount}}}</span><br/>
+       {{/if}}
+       {{#ifEquals cartItemType 'Coupon'}}
+       <strong>{{pageLabelMap 'Total Savings'}}: {{{price itemTotal}}}</strong>
+       {{else}}
+       <strong>{{pageLabelMap 'CartInc_Total'}}: {{{price itemTotal}}}</strong>
+        {{/ifEquals}}
+      </p>
+     </div>
+                       
+    </div>
+    {{#ifEquals cartItemType 'Coupon'}}
+     <p class="item_title coupon_title" data-id="{{mockProduct.sku}}">
+      <span class="couponCartLabel">{{pageLabelMap 'CartInc_AppliedCoupon'}}</span>{{mockProduct.name}}
+     </p>
+    {{else}}
+     <div class="cart_item_viewport">
+      <a href="#" class="prodLink" data-id="{{mockProduct.sku}}">{{{displayImage mediaWrapper 'cart'}}}</a>
+     </div>
+     <p class="item_title">
+                    {{#if displayProductBean.sku}}
+                        <a href="#" class="prodLink" data-id="{{displayProductBean.sku}}">{{displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name }}</a>
+                    {{else}}
+                        <a href="#" class="prodLink" data-id="{{mockProduct.sku}}">{{displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name }}</a>
+                    {{/if}}
+     </p>
+
+                    <p ><span><strong>{{pageLabelMap 'SKU'}}:</strong> {{mockProduct.sku}}</span></p>
+                    
+                   <p align="left" class="item_title">
+                   {{#if (compSage30Monthly (displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name) installmentFrequencyUOM)}}
+                   
+                      <div class="value hardcodedProdPrice"><strong>{{pageLabelMap 'Price per User'}}</strong></br>
+                       1-10 users, $10/month 
+                        </br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  11-20 users $8/month 
+                    </br> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 21-30 users $5/month
+            </div>
+      {{/if}}
+      {{#if (compSage30Yearly (displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name) installmentFrequencyUOM)}}
+                   
+                      <div class="value hardcodedProdPrice"><strong>{{pageLabelMap 'Price per User'}}</strong></br>
+                       1-10 users, $96/Year 
+                        </br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  11-20 users $76/Year 
+                    </br> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 21-30 users $48/Year
+            </div>
+      {{/if}}
+       {{#if (compSagepayroll (displayProductName 'Aggregate_Display' displayProductBean.name mockProduct.name))}} 
+                             
+            <div class="value hardcodedProdPrice"><strong>{{pageLabelMap 'Price per Paycheck'}}</strong></br>
+                   1-20 Paychecks, $2/Month  
+            </br>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 20+ Paychecks, $1/Month
+           </div> 
+       {{/if}}
+          </p>
+                    {{#if sellerName}}
+                     <p><span class="soldbylabel">{{pageLabelMap 'Prod_SoldBy'}}:</span><span class="soldbyname"> {{sellerName}}</span></p>
+                    {{/if}}
+
+                    {{#if showSubProdTerm}}
+                        <p>
+                         <span>
+                          {{insertTokens cartDisplayName displayName (price price) (price SubAmount) (price recurringPrice) (price recurringPriceSubAmount) (pageLabelPrefixMap 'Subscriptions_Frequency_' orderFrequencyUOM) (pageLabelPrefixMap 'Subscriptions_Frequency_' installmentFrequencyUOM) orderFrequency installmentFrequency installmentCount orderCount}}
+                         </span>
+                        </p>
+                    {{else}}
+                        {{#if this.isSubscription}}
+                            <p class="subscriptionSummary">{{subscriptionSummary 'Cart_Subscription_' this.subscriptionFrequency mockProduct.sku itemTotal}}</p>
+                        {{/if}}
+                    {{/if}}
+
+                    <div class="cart-links">
+                     {{#if showIncludedItems }}
+       <a href="#included_items{{itemID}}" class="includedItemsLink" id="includedItemsLink{{itemID}}" data-desktop="true" data-toggle="modal" data-id="{{itemID}}">{{pageLabelMap 'CartInc_IncludedItems'}}</a>
+       {{#ifDisplay 'C.DsplAddtInfo'}} &#160;|&#160;{{/ifDisplay}}
+       {{> includedDisplay}}
+      {{/if}}
+      {{#ifDisplay 'C.DsplAddtInfo'}}
+       <a class="included_items" href="#additional_info{{itemID}}" id="additionalInfoLink" data-toggle="modal">{{pageLabelMap 'AdditionalInfo'}}</a>
+       {{#ifDisplay 'C.DsplComments'}} &#160;|&#160;{{/ifDisplay}}
+       {{> cartItemAdditional}}
+      {{/ifDisplay}}
+      {{#ifDisplay 'C.DsplComments'}}
+       <a href="#comments_{{itemID}}" id="commentsLink" data-toggle="modal">{{pageLabelMap 'CartLineCommentLabel'}}</a>
+       {{> cartItemComment}}
+      {{/ifDisplay}}
+                    </div>
+
+     
+                    
+     {{#each minorLines}}
+                        {{#if showSubProdTerm}}
+                            <p><label class="subscriptionSummary">{{insertTokens cartDisplayName displayName (price price) (price SubAmount) (price recurringPrice) (price recurringPriceSubAmount) (pageLabelPrefixMap 'Subscriptions_Frequency_' orderFrequencyUOM) (pageLabelPrefixMap 'Subscriptions_Frequency_' installmentFrequencyUOM) orderFrequency installmentFrequency installmentCount orderCount}}</span></label></p>
+                        {{else}}
+                            {{#if this.isSubscription}}
+                               <p class="subscriptionSummary">{{subscriptionSummary 'Cart_Subscription_' this.subscriptionFrequency mockProduct.sku itemTotal}}</p>
+                            {{/if}}
+                        {{/if}}
+     {{/each}}
+     <div class="clear"></div>
+     <div class=" wishFinder" data-sku="{{mockProduct.sku}}">
+      <button type="button" class="btn slim deleteItem removeItemButton" data-dismiss="modal" aria-hidden="true" data-id="{{itemID}}" >{{pageLabelMap 'Action_Delete'}}</button>
+      {{#unless showSubProdTerm}}
+                                <div class="wishButtons"></div>
+                           {{/unless}}
+     </div>
+    {{/ifEquals}}
+    <div class="alert alert-error messagingSection-{{itemID}}-Error" style="display: none"></div>
+    <div class="alert alert-info messagingSection-{{itemID}}-Info" style="display: none"></div>
+   {{/ifEquals}}
+  {{/with}}
+ </script>
+ <script type="text/javascript">
+   jQuery(function($){
+     <!-- Ecom-263 User based and usage based pricing for product Sage 30-->
+   CCRZ.uiProperties.CartDetailView.partials.cartItemsDesktop ='#cc_ecomm_CartItemDetail-View-Desktop';
+   Handlebars.registerHelper("compSage30Monthly", function(prodName,instFreq){
+                    
+            if((prodName == 'Sage 30' || prodName == 'Sage 30 Premium') && instFreq == 'Monthly')
+            {
+                return true;
+            }
+         });
+    Handlebars.registerHelper("compSage30Yearly", function(prodName,instFreq){
+                    
+            if((prodName == 'Sage 30' || prodName == 'Sage 30 Premium') && instFreq == 'Yearly')
+            {
+                return true;
+            }
+         });
+  Handlebars.registerHelper("compSagepayroll", function(prodName){
+            
+            if(prodName == 'Sage Payroll')
+            {
+                return true;
+            }
+         });
+         
+  Handlebars.registerHelper("calcUnitPrice", function(quantity,price,absoluteDiscount,carttotal) {
+      var unitprice = 0;    
+    
+    if(absoluteDiscount)
+       unitprice = price;
+    else
+    {
+    unitprice = (carttotal/quantity).toFixed(2);
+    }
+  return unitprice;
+         });
+     });
+</script>
+ <!-- Pulkit - Hiding the shopping cart image from component-->
+<style type="text/css">
+        .main_page_title
+        {
+        display : none;
+        }       
+</style>        
+        
+
+ </apex:component>

@@ -1,0 +1,21 @@
+<apex:page standardController="Zuora__CustomerAccount__c" extensions="DefaultPaymentMethodCreationController" >
+    <apex:outputPanel rendered="{!NOT(displayPaymentMethodForm)}">
+    <apex:form >
+        <apex:pageMessages />
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!next}"  value="Next"/>
+                <apex:commandButton action="{!cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Choose Payment Method">
+                <apex:selectList required="true" value="{!chosenPaymentMethodId}" label="Payment Method" size="1">
+                    <apex:selectOptions value="{!paymentMethods}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!displayPaymentMethodForm}">
+        <zqu:PaymentPage zuoraPageId="{!pageId}" submitEnabled="true" style="inline" />
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,16 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes" extends="c:custCommGenericComponent">
+    
+    <aura:attribute name="text" description="Text in the alert" type="String" access="GLOBAL"/>
+    <aura:attribute name="theme" description="Theme of the alert. Can be success, error or offline." type="String" access="GLOBAL"/>
+    <aura:attribute name="url" default="" description="URL to navigate to when the alert is clicked." type="String" access="GLOBAL"/>
+    <aura:attribute name="iconName" description="Name of the icon" type="String" access="GLOBAL"/>
+    <aura:attribute name="iconType" description="Type of the icon" type="String" access="GLOBAL"/>
+    
+    <div class="{! v.url != '' ? 'showPointer' : '' }">
+        <c:alert theme="{! v.theme }" hasCloseButton="false" onClick="{! c.navigate }">
+            <aura:if isTrue="{! v.iconName != ''}">
+                <c:icon iconName="{! v.iconName }" iconType="{! v.iconType }" iconSize="small"/>&nbsp;
+            </aura:if>{! v.text }
+        </c:alert>
+    </div>
+</aura:component>

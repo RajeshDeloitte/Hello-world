@@ -1,0 +1,14 @@
+<aura:component controller="CommunityUtilities" access="GLOBAL" extends="c:custCommGenericComponent">
+    <aura:attribute name="customPermissionName" type="String" required="true" access="GLOBAL"
+                    description="Name of the custom permission that the user should have assigned"/>
+    <aura:attribute name="label" type="String" description="Label for button" required="true" access="GLOBAL"/>
+    <aura:attribute name="btnClass" default="hidden" type="String" description="Class" required="false" access="GLOBAL"/>
+    <aura:attribute name="linkRef" type="String" description="Href for the icon" default=""/>
+    <aura:attribute name="press" type="Object" description="Action to be performed on press" required="true" access="GLOBAL"/>
+    <aura:attribute name="disabled" type="Boolean" required="false" default="false" access="GLOBAL" description="Determines if the button is disabled." />
+    <aura:attribute name="notransition" type="Boolean" required="false" default="false" access="GLOBAL" description="Determines if ccs transition should apply to the button." />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <c:custCommButton linkRef="{! v.linkRef }" class="{!v.btnClass + (v.notransition? ' notransition' : '')}" press="{!v.press}" disabled="{!v.disabled}">{!v.label}</c:custCommButton>
+</aura:component>

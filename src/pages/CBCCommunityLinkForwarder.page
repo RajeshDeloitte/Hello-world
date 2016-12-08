@@ -1,0 +1,8 @@
+<apex:page controller="CBCCommunityLinkController">
+    <apex:form >
+        <apex:sectionHeader />
+        <apex:pageBlock title="Sage Live Community Access">
+            <apex:commandLink target="_blank" action="{!redirectToCommunity}" value="{!$Label.SageLiveCommunityLinkLabel}"></apex:commandLink>
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

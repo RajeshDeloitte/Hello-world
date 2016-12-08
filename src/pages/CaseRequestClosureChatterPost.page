@@ -1,0 +1,72 @@
+<apex:page standardController="Case" extensions="CaseRequestClosureChatterPostController" showHeader="false">
+
+    <!-- Need the .. in front of the publisher.js path due to running in the Community -->
+    <script type='text/javascript' src='../canvas/sdk/js/publisher.js'/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script>
+        function refreshFeed() {
+            Sfdc.canvas.publisher.publish({name : 'publisher.refresh', payload : {feed: true}});
+        }
+    	$( document ).ready(function() {
+            $("textarea[id$='closureReason']").css('padding','5px');
+            $("textarea[id$='txtTitle']").css('box-sizing','border-box');
+        });
+    </script>
+    
+    <style>
+        .btnCloseCaseClass:hover{
+        	    background-color: #a0cb3d;
+                background-image: -ms-linear-gradient(top,#a5cd48 0,#97bf3a 100%);
+                background-image: -moz-linear-gradient(top,#a5cd48 0,#97bf3a 100%);
+                background-image: -webkit-linear-gradient(top,#a5cd48 0,#97bf3a 100%);
+                background-image: linear-gradient(top,#a5cd48 0,#97bf3a 100%);
+        }
+        .btnCloseCaseClass{
+ 		    position:fixed; bottom:0px; right:0px; 		
+            font-family: Arial;
+            font-size: 1.08em;
+            background-color: #8ab529;
+            border: 1px solid #6c8049;
+            background-image: -ms-linear-gradient(top,#8AB529 0,#87AC31 100%);
+            background-image: -moz-linear-gradient(top,#8AB529 0,#87AC31 100%);
+            background-image: -webkit-linear-gradient(top,#8AB529 0,#87AC31 100%);
+            background-image: linear-gradient(top,#8AB529 0,#87AC31 100%);
+            display: inline-block;
+            padding-top: 0;
+            padding-bottom: 1px;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 30px;
+            color: #fff;
+            -moz-border-radius: 3px;
+            border-radius: 2px;
+            -moz-box-shadow: 0 1px 2px 0 #adadad;
+            -webkit-box-shadow: 0 1px 2px 0 #adadad;
+            box-shadow: 0 1px 2px 0 #adadad;
+            margin: 0;
+		}
+    </style>    
+    <div>
+        <apex:form >
+            
+            <!-- Posts on the Case Feed -->
+            <apex:actionFunction action="{!requestCaseClosure}" name="requestCaseClosure" rerender="op" oncomplete="refreshFeed();"/>  
+            <apex:outputPanel layout="block" styleClass="TextPost publisherTemplate activeTemplate" id="op" >
+                <div style="padding: 2px;font-weight: bold;">
+                    <apex:outputLabel for="closureReason" value="{!$Label.CaseRequestClosureFeedHeader}"/>    
+                </div>
+                
+                    <apex:inputTextarea styleClass="chatterCloseTextArea" id="closureReason" value="{!message}" style="width:97%; height:85px;" />
+                
+                
+                <!--apex:inputTextarea value="{!message}" style="width:538px; height:92px; margin-top:4px;" /-->
+            
+            <apex:outputPanel layout="block" styleClass="publisherBottomBarPlaceholder">
+        		<!--<button type="button" onclick="requestCaseClosure();" style="position:fixed; bottom:0px; right:0px; padding:5px 10px; font-size:13px; line-height:18px; color:#ffffff; background-color:#A0CB3D; background-image:-moz-linear-gradient(#A5CD48, #97BF3A); background-repeat:repeat-x; border-color:#6C8049;" id="requestCaseClosureButton">Request Case Closure</button>-->
+                <button type="button" onclick="requestCaseClosure();" class="btnCloseCaseClass" id="requestCaseClosureButton">{!$Label.CaseRequestClosureBtnLabel}</button>
+            </apex:outputPanel>    
+        </apex:outputPanel>        
+        </apex:form><br />    
+    </div> 
+
+</apex:page>

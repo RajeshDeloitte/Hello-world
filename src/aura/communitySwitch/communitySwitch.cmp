@@ -1,0 +1,12 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="CommunityUtilities" access="GLOBAL" extends="c:custCommGenericComponent">
+	<aura:attribute name="communities" type="Object[]" default="[]" description="The list of reason for cancelling the subscription" access="GLOBAL" />
+    <aura:attribute name="label" description="Label for the component" type="String" access="GLOBAL" />
+    <aura:attribute name="options" description="Options to be displayed in the dropdown" type="String[]" access="GLOBAL" />
+    
+    <aura:handler name="onChange" event="c:basicEvent" action="{!c.handleChangeEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!v.communities.length > 1}">
+		<c:custCommSelect label="Switch Community" options="{!v.options}" />
+	</aura:if>
+</aura:component>

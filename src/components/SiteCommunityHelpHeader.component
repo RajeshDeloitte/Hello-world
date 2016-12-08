@@ -1,0 +1,26 @@
+<apex:component id="communityHelpHeaderComponent">
+    <style>
+        .logoSage{
+            position: relative;
+            left: 6px;
+        }
+     </style>
+     <div class="header-stat">
+        <div class="header-top">
+            <div class="header-top-container">
+                <br/>
+                <table>
+                    <tr>
+                        <td>
+                            <apex:image url="{!$Resource.SageLogo}" alt="Sage Live Knowledgebase" width="148" height="55" title="Sage Live Knowledgebase" styleClass="logoSage"/>
+                        </td>
+                        <td style="text-align:center;color:#717171;font-size:300%;">
+                            Live Knowledgebase 
+                        </td>
+                    </tr>   
+                </table>                 
+            </div>
+        </div>
+     </div> 
+  <br/>
+</apex:component>

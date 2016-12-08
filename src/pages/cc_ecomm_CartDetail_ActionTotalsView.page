@@ -1,0 +1,13 @@
+<!--
+<Summary>
+--------------------------------------------------------------------------------------------------------------------------------
+Author                                  Date                                            Description
+
+---------------------------------------------------------------------------------------------------------------------------------
+Rajesh Kumar                           21/11/2016                       To Display GrandTotal on Cart Page.
+
+-->
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+<!-- Label change in Cart page to GrandTotal   -->
+<c:cc_ecomm_CartDetail_ActionTotalsView />
+</apex:page>

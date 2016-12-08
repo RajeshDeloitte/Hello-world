@@ -1,0 +1,5 @@
+<!-- Allows use of Salesforce Lightning Design System within a component. Add to every component that relies on the lightning design system. -->
+<aura:component access="GLOBAL" description="References SLDS stylesheet.">
+    <!-- Commented out by Arturs Gusjko on 2016-05-23 due to slds references being embedded into the customer community by default. -->
+	<!-- <ltng:require styles="/resource/SLDS104/assets/styles/salesforce-lightning-design-system.min.css" /> -->
+</aura:component>

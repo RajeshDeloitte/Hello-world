@@ -1,0 +1,7 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+  <h3>Overridden Page</h3>
+  <!-- Begin Default Content REMOVE THIS -->
+  <c:CC_ProductDetailsCompOverride />
+  <!-- End Default Content REMOVE THIS -->
+  
+</apex:page>

@@ -1,0 +1,9 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+    <ltng:require styles="/resource/SLDS104/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <div class="slds">
+        <ui:button class="slds-button slds-button--icon">
+            <c:svg xlinkHref="/resource/SLDS104/assets/icons/action-sprite/svg/symbols.svg#close" class="slds-button__icon slds-button__icon--large" ariaHidden="true" />
+            <span class="slds-assistive-text">Close</span>
+        </ui:button>
+    </div>
+</aura:component>

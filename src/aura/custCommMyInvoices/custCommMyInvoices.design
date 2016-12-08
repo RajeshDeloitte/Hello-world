@@ -1,0 +1,7 @@
+<design:component label="My Invoices">
+	<design:attribute name="columnDisplayNames" label="Column Display Names" description="A comma seperated list of column names." />
+    <design:attribute name="columnDisplayFields" label="Salesforce field names for columns" description="A comma seperated list of field names which map to the column names above." />
+    <design:attribute name="sortField" label="Field to sort by" description="Field to sort by" />
+    <design:attribute name="invoiceIdField" label="Invoice Id Field to use for Zuora" description="Field which stores the zuora invoice id" />
+	<design:attribute name="limit" label="Maximum number of invoices to display" description="Maximum number of invoices to display"/>
+</design:component>

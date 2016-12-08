@@ -1,0 +1,5 @@
+<design:component label="Dropdown with Link">
+	<design:attribute name="label" description="Label for the component" />
+    <design:attribute name="options" description="Options to be displayed in the dropdown"  />
+    <design:attribute name="links" description="List of links to navigate to" />
+</design:component>

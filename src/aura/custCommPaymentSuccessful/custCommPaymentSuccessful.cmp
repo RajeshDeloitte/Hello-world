@@ -1,0 +1,18 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="GLOBAL" extends="c:custCommGenericComponent" controller="ZuoraPaymentPageUtility"> 
+	<!-- THESE PARAMETERS ARE RETURNED ON THE CALLBACK BY ZUORA 
+		DO NOT MODIFY THEIR VALUES (unless the parameter names change in a new version of the Zuora JS Library) -->
+    <!-- Attribute that holds the Payment Method just created by Zuora -->
+    <aura:attribute name="success" type="String" default="success" />
+    <!-- Attribute that holds the Payment Method just created by Zuora -->
+    <aura:attribute name="refId" type="String" default="refId"/>
+    <!-- Attribute that holds the error message (if any) when the payment method wasn't created-->
+    <aura:attribute name="errorMessage" type="String" default="errorMessage" />
+    <!-- Attribute that holds the url we should redirect to after the Payment Method Id received is linked to the billing account
+		DO NOT MODIFY ITS NAME since it's the way the Zuora JS library reference the custom parameter in the callback -->
+    <aura:attribute name="field_passthrough1" type="String" default="field_passthrough1"/>
+    <!-- Since this component will be on a page usually loaded inside an iframe
+		we register this event to let the top window know that needs to be redirected -->
+    <!-- <aura:registerEvent name="redirectAfterPayMethodAssociated" type="c:custCommRedirectAfterZuoraCallback"/> -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+</aura:component>

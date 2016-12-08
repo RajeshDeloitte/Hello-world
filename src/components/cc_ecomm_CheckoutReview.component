@@ -1,0 +1,107 @@
+<!--Pulkit Dua         11th Nov         Hiding the shipping and billing address and shipping information from the Checkout review page -->
+<!--Pulkit Dua         28th Nov         Hiding subtotal from the Checkout review page. -->
+
+
+
+
+
+<apex:component allowDML="true">
+    <!-- Begin Default Content REMOVE THIS -->
+    <script id="cc_ecom_Review-Desktop" type="text/template">
+        <form enctype="multipart/form-data" class="margin_form cc_OrderReview_new">
+            <div class="alert alert-error messagingSection-Error" style="display: none"></div>
+            <div class="alert alert-info messagingSection-Info" style="display: none"></div>
+            <div class="alert alert-warning messagingSection-Warning" style="display: none"></div>
+            <fieldset class="grey">
+                <legend class="grey">{{pageLabelMap 'CheckOut_GeneralInformation'}}</legend>
+                <ul class="order_review">
+                    <li>
+                        <p>
+                            <strong>{{pageLabelMap 'CheckOut_BuyerInformation'}}</strong>
+                            <a id="edit_UserInfo" href="#edit_UserInfo" class="editAddressInfo">{{pageLabelMap 'CheckOut_edit'}}</a><br/>
+                                {{this.buyerFirstName}} {{this.buyerLastName}}<br/>
+                                {{this.buyerPhone}}<br/>
+                                {{this.buyerEmail}}
+                        </p>
+                        <!--
+                        <!-- Hiding Shiping Information from the checkout review page- Pulkit -->
+                        <p>
+                            <!--
+                            <strong>{{pageLabelMap 'CheckOut_ShipmentInformation'}}</strong>
+                            <a id="edit_Shipping" href="#edit_Shipping" class="editShippingInfo">{{pageLabelMap 'CheckOut_edit'}}</a><br/>
+                            {{#if this.shippingMethod}}
+                            {{pageLabelMap 'CheckOut_ShippingMethod'}}: {{this.shippingMethod}}<br/>
+                            {{/if}}
+                            {{#if this.shippingInst}}
+                            {{pageLabelMap 'CheckOut_ShippingNotes'}}: {{this.shippingInst}}<br/>
+                            {{/if}}
+                            {{#if this.requestedDateStr}}
+                            {{pageLabelMap 'Checkout_RequestedDeliveryDt'}}: {{this.requestedDateStr}}<br/>
+                            {{/if}}
+                            -->
+                                                            
+                    </li>
+                    <li>
+                        <p>
+                          
+                           
+                            <strong>{{pageLabelMap 'CheckOut_BillingAddress'}}</strong>
+                            <a id="edit_UserInfo" href="#edit_UserInfo" class="editAddressInfo">{{pageLabelMap 'CheckOut_edit'}}</a><br/>
+                            {{> addressDisplay this.billingAddress}}
+                            </p>
+                            {{#if this.hasCoupon}}
+                            <p class="coupon_section"><strong>{{pageLabelMap 'CartInc_AppliedCoupon'}}</strong><br/>{{this.couponName}}</p>
+                            {{/if}}
+                            </li>
+                            <li>
+                                <p>
+                                <!-- Hiding Shiping Address from the checkout review page- Pulkit -->
+                                    <!--
+                                    <strong>{{pageLabelMap 'CheckOut_OrderReviewShippingAddress'}}</strong>
+                                    <a id="edit_UserInfo" href="#edit_UserInfo" class="editAddressInfo">{{pageLabelMap 'CheckOut_edit'}}</a><br/>
+                                        {{> addressDisplay this.shippingAddress}}
+                                        -->
+                                </p>
+                            </li>
+                </ul>
+            </fieldset>
+            <div class="reviewCartSection"></div>
+            <div class="clear"></div>
+            <div class="reviewPaymentSection"></div>
+            <p class="link_button">
+                <input class="button processBack" type="button" value="{{pageLabelMap 'Back'}}" alt="{{pageLabelMap 'Back'}}" />
+                <input class="button right proceed processReview" type="button" value="{{pageLabelMap 'CheckOut_MobileGotoPayment'}}" alt="{{pageLabelMap 'CheckOut_AcceptAndProceed'}}" />
+                <br/>
+            </p>
+        </form>
+    </script>
+    <script type="text/javascript">
+    jQuery(function($){
+        
+        CCRZ.uiProperties.OrderReviewView.desktop.tmpl='cc_ecom_Review-Desktop';
+        Handlebars.registerHelper("compSage30", function(){
+            var prodName = this.product.prodBean.name;
+            if(prodName == 'Sage 30')
+            {
+                return true;
+            }
+        });
+        Handlebars.registerHelper("compSagepayroll", function(){
+            var prodName = this.product.prodBean.name;
+            if(prodName == 'Sage Payroll')
+            {
+                return true;
+            }
+        });
+    });
+    </script>
+    <!-- Pulkit- Hiding Subtotal from the Checkout review page -->
+    <style type="text/css">
+        
+       .totals_subTotal_line
+        {
+        display:none;
+        }
+    </style>
+    <!-- End Default Content REMOVE THIS -->
+</apex:component>

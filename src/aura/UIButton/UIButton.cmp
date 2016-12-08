@@ -1,0 +1,12 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	 <aura:attribute name="buttonLabel" type="String" description="Label for Button" required="true"/>
+    <aura:attribute name="buttonIconName" type="String" description="SLDS Icon Name e.g settings" default="settings"/>
+    <aura:attribute name="buttonIconType" type="String" description="SLDS Icon type e.g utility" default="utility"/>
+    <aura:attribute name="eventName" type="String" description="Event Name" required="true"/>
+    <aura:attribute name="eventParamsJson" type="String" description="Event Params"/>
+    <aura:attribute name="style" type="String" description="Button Inline CSS Styles"/>
+    <button class="slds-button" onclick="{!c.onButtonClick}" style="{!v.style}">
+        <c:icon class="slds-button__icon slds-button__icon--left slds-icon--small" iconName="{!v.buttonIconName}" iconType="{!v.buttonIconType}"/>
+        {!v.buttonLabel}
+    </button>
+</aura:component>

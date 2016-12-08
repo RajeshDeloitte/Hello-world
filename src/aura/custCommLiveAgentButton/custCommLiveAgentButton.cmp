@@ -1,0 +1,41 @@
+<!--
+@description Displays live agent button in community.
+
+@author Arturs Gusjko <arturs.gusjko@bettercloudsolutions.co.uk>
+-->
+<aura:component implements="forceCommunity:availableForAllPageTypes,c:htmlAttributes" controller="CustCommLiveAgentButtonCtrl" extends="c:custCommGenericComponent">
+
+    <!-- html attributes -->
+    <aura:attribute name="class" type="String" default="hidden" description="The class of the component" access="GLOBAL" />
+    <aura:attribute name="id" type="String" default="" description="The id of the component" access="GLOBAL"/>
+    <aura:attribute name="data" type="Object" default="" description="The data associated to the component. Not used." access="GLOBAL"/>
+
+    <!-- External Parameters -->
+    <aura:attribute name="deploymentAPIName" type="String" description="Live Agent Deployment API Name" access="global" />
+    <aura:attribute name="buttonAPIName" type="String" description="Live Agent Button API Name" access="global" />
+
+    <aura:attribute name="deploymentId" type="String" description="Live Agent Deployment Id"/>
+    <aura:attribute name="buttonId" type="String" description="Live Agent Button Id"/>
+    <aura:attribute name="orgId" type="String" description="Organization Id"/>
+    <aura:attribute name="liveagentInitUrl" type="String" description="Live Agent Init URL, e.g. https://d.la1-c2cs-lon.salesforceliveagent.com/chat" default="" access="global" />
+    <aura:attribute name="deploymentUrl" type="String" description="Live Agent Deployment URL, e.g. https://c.la.gus.salesforce.com/content/g/js/37.0/deployment.js" default="" access="global" />
+
+    <aura:attribute name="debugMode" type="Boolean" description="If set to true, enables Live agent debug mode." default="false"/>
+    <aura:attribute name="popupContact" type="Boolean" description="If set to true, pops up contact to the agent." default="false"/>
+
+
+    <aura:attribute name="isAgentAvailable" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="proxyURL" type="String" default="" description="URL to the visualforce proxy for live agent." access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div id="{! v.id }" class="{! v.class }">
+
+        <c:custCommButton class="{! 'forceChatterAttachFileButton laButton' + ( v.isAgentAvailable ? ' agentAvailable' : ' agentUnavailable' ) }" disabled="{! !v.isAgentAvailable }" aura:id="liveagent_btn" press="{!c.startChat}">
+            <c:icon class="slds-button__icon slds-button__icon--left slds-icon--small" iconName="questions_and_answers" iconType="utility"/>
+            <span>{! $Label.c.CustComm_LiveAgent_Start_Chat }</span>
+        </c:custCommButton>
+        <iframe aura:id="liveAgentProxyIframe" src="{! v.proxyURL }" height="0" width="0" class="slds-hide" />
+    </div>
+
+</aura:component>

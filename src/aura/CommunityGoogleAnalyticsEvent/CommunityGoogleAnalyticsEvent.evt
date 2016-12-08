@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="hitType" type="String" description="Google Analytics hit type" default="pageview"/>
+    <aura:attribute name="data" type="Object" description="Data to post to Google Analytics"/>
+</aura:event>

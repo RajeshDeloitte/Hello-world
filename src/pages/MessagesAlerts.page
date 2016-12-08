@@ -1,0 +1,7 @@
+<apex:page >
+    {!$Label.Messages_and_Alerts}<br/>
+<a href="https://sagegroup.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F924000000ChcQ&s=sage+2020&r=1">Sage 2020</a>
+    <br/>
+    {!$Label.Messages_and_Alerts2}<br/><br/>
+<a href="https://sagegroup.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F924000000ChRv">{!$Label.Messages_and_Alerts3}</a>
+</apex:page>

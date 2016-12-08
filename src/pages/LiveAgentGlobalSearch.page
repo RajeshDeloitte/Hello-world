@@ -1,0 +1,58 @@
+<apex:page title="Test" controller="LiveAgentGlobalSearchController">
+   <apex:includeScript value="/support/console/32.0/integration.js"/>
+   <script type="text/javascript">     
+       function setTabTitle() {
+           sforce.console.setTabTitle('Global Search');
+       }      
+       
+       var previousOnload = window.onload;       
+
+       window.onload = function() {
+            if (previousOnload) {
+                previousOnload();
+            }               
+
+            setTimeout('setTabTitle()', '500');
+            var tabId = sforce.console.getEnclosingPrimaryTabId(showMainTabId);
+            var subTabIds = sforce.console.getSubtabIds(null, showTabId);
+       }
+       
+       var showMainTabId = function showMainTabId(result) {
+           var tabIndex = result.id.split("scc-pt-");
+           sforce.console.setTabTitle('Chat '+tabIndex[1],result.id);
+       }
+       
+       var showTabId = function showTabId(result) {
+            //Display the subtab IDs
+            sforce.console.focusSubtabById(result.ids[0]);
+            };
+            
+              
+   </script>
+   <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <script type='text/javascript' src='https://c.la1-c1cs-lon.salesforceliveagent.com/content/g/js/34.0/deployment.js'></script>
+
+    <script type='text/javascript'>
+        j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+            liveagent.init('https://d.la1-c1cs-lon.salesforceliveagent.com/chat', '572250000004CAG', '00D25000000DJ25');
+            console.log('---' + j$('.tabText'));
+            j$('.tabText').on("click",function(){
+               console.log('--1--' + liveagent.agent.getChasitors()[0].getCustomDetails()[0].value);
+               console.log('--2--' + liveagent.agent.getChasitors()[0].getCustomDetails()[1].value);
+            });
+            
+        });
+        
+    </script>
+    
+    
+
+    <apex:pageBlock title="Global Search">
+        <apex:form >
+            Please type search criteria, for example Customer Name or Case number.<br/><br/>
+            <apex:inputText id="criteriaBox" value="{!criteria}"/>
+            <apex:commandButton value="Search" action="{!goGS}"/>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

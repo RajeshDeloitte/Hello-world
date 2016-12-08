@@ -1,0 +1,23 @@
+<apex:component >
+    <apex:attribute name="injectedController" description="the controller of the listing detail page" type="asb_ListingDetailController" required="true" />
+    
+    <div class="prx-content-header">
+        <div class="prx-content-header-inner">
+            <c:asb_pageMessages />
+            
+            <div class="prx-content-header-main">
+                <div class="prx-store-logo">
+                    <apex:outputPanel rendered="{!ISPICKVAL($User.UserType,'Guest')}" layout="none">
+                    <a href="/marketplace"><img src="{!injectedController.store.LogoDocument.Url}" /></a>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}" layout="none">
+                    <img src="{!injectedController.store.LogoDocument.Url}" />
+                    </apex:outputPanel>
+                </div>
+                <h1 class="prx-h1-store">{!injectedController.storeName}</h1>
+            </div>
+            <div class="prx-content-header-extra">
+            </div>
+        </div>
+    </div>
+</apex:component>

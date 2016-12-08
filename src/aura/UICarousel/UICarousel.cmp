@@ -1,0 +1,37 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="isRendered" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="carouselInputJson" type="String"/>
+    <aura:attribute name="autoPlay" type="Boolean" default="false"/>
+    <aura:attribute name="autoPlayInterval" type="Integer" default="2000" description="Auto Play Duration"/>
+    <aura:attribute name="slides" type="List"></aura:attribute>
+    <aura:attribute name="currentSlideIdx" type="Integer" default="0"></aura:attribute>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.errorMsg !=null}">
+      <ui:message severity="error">{!v.errorMsg}</ui:message>
+    </aura:if>
+    <aura:renderIf isTrue="{!v.slides !=null}">
+    <div aura:id="slider" class="slider">
+        <div aura:id="slides" class="slider__slides" style="{!'width:' + (v.slides.length*100) + '%;transform:translateX(' + (-v.currentSlideIdx*100)/v.slides.length + '%);'}">
+            <aura:iteration items="{!v.slides}" var="slide" indexVar="indx">
+                <div class="slider__slide" onclick="{!c.onslideClick}" data-idx="{!indx}" style="{!'width: ' + 100/v.slides.length + '%;cursor: ' + ((slide.url!=null &amp;&amp; slide.url!='')? 'pointer': 'default') }">
+                    <img src="{!slide.image}"/>
+                    <aura:renderIf isTrue="{!slide.title!=null}">
+                        <div class="caption center-align">
+                            <h2><aura:unescapedHtml value="{!slide.title}"/></h2>
+                            <p><aura:unescapedHtml value="{!slide.description}"/></p>
+                        </div>
+                    </aura:renderIf>
+                </div>
+            </aura:iteration>
+        </div>
+        <div class="slider__dots" >
+            <a aura:id="slider_indicator" href="javascript:void(0);" class="slider__indicator" style="{!'left: ' + (v.currentSlideIdx*2) + 'em;right: ' +  (((v.slides.length-1)*2)-(v.currentSlideIdx*2)) + 'em;'}"></a>
+			<aura:iteration items="{!v.slides}" var="slide" indexVar="indx">
+            <a href="javascript:void(0);" class="slider__dot" data-idx="{!indx}" onclick="{!c.sliderNav}"></a>
+            </aura:iteration>
+        </div>
+    </div>
+    </aura:renderIf>
+
+</aura:component>

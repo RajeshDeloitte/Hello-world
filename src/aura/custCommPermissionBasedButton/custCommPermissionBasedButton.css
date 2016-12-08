@@ -1,0 +1,7 @@
+.THIS.hidden {
+	display: none;
+}
+
+.THIS.notransition {
+    transition: none !important;
+}

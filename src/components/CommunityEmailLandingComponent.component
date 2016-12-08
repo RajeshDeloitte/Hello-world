@@ -1,0 +1,6 @@
+<apex:component controller="CommunityEmailLandingController" access="global">
+    <apex:attribute assignTo="{!language}" name="lang" required="true" type="String" access="global" description="Language of the community user"/>
+    <apex:attribute assignTo="{!nameOfUser}" name="name" required="true" type="String" access="global" description="Name of the community user"/>
+    
+    <apex:outputText value="{!emailbody}" escape="false" />
+</apex:component>

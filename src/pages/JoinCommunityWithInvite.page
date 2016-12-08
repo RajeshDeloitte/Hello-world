@@ -1,0 +1,182 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" controller="SageSSOController" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" action="{!initInvite}">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <title>Join Community With Invitation</title>
+        <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+        <style>
+        footer {
+            clear: both;
+            padding: 0;
+            text-align: center;
+            vertical-align: middle;
+            line-height: normal;
+            margin: 0;
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        button.slds-button {
+            border-radius: 2px;
+            padding: 15px 0;
+            background-color: #ca2a60;
+            border: none;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 1em;
+            margin: 0;
+            width: 100%;
+        }
+
+        button.slds-button.facebook {
+            color: #fff;
+            background-color: #3b5998;
+            border:none;
+        }
+
+        button.slds-button.facebook:hover {
+            color: #fff;
+            background-color: #3b5998;
+            border:none;
+        }            
+            
+        button.slds-button.google {
+            color: #fff;
+            background-color: #dd4b39;
+            border: none;
+        }
+            
+        button.slds-button.google:hover {
+            color: #fff;
+            background-color: #dd4b39;
+            border:none;
+        }
+
+        button.slds-button.sage {
+            background: #00AF3F;
+            border: none;
+            color: #fff;
+        }
+        button.slds-button.sage:hover {
+            background: #00AF3F;
+            border: none;
+            color: #fff;
+        }
+        .slds .slds-spinner_container {
+            background-color: rgba(168, 183, 199, 0.75);
+        }
+        </style>
+    </head>
+
+    <body>
+        <apex:form >
+            <!-- Define the JavaScript function sayHello-->
+            <apex:actionFunction name="navToRegister" action="{!navToRegister}" rerender="invite-wrapper" status="showProgress" />
+            <apex:actionFunction name="startExistingSageUserReg" action="{!startExistingSageUserReg}" status="showProgress" />
+            <apex:actionFunction name="startNewSageUserReg" action="{!startNewSageUserReg}" status="showProgress" />
+            <apex:actionFunction name="handleFacebookConnect" action="{!handleFacebookConnect}" status="showProgress" />
+            <apex:actionFunction name="handleGoogleConnect" action="{!handleGoogleConnect}" status="showProgress" />
+        </apex:form>
+        <!-- REQUIRED SLDS WRAPPER -->
+        <div class="slds">
+            <apex:actionStatus id="showProgress" stopText="">
+                <apex:facet name="start">
+                    <div class="slds-spinner_container">
+                        <div class="slds-spinner--inverse slds-spinner  slds-spinner--medium" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionStatus>
+            <apex:outputPanel id="invite-wrapper">
+                <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="slds-text-align--center slds-container--center slds-container--small slds-p-vertical--large">
+                    <img src="https://www.sage.com/themes/group/img/sage-logo-brilliant-green.svg" width="100px" />
+                    <apex:outputPanel id="welcome" styleClass="slds-grid slds-wrap slds-grid--vertical-align-center" style="min-height:300px;" rendered="{!if(currentView=='WELCOME', true, false)}">
+                        <apex:outputPanel styleClass="slds-text-align--center slds-size--1-of-1" id="inviteForm" rendered="{! IF(invitationId==null || invitationId=='', true, false)}">
+                            <div class="slds-box slds-box--x-small slds-theme--error">
+                                <p>{!$Label.partner_InviteCodeMissing}</p>
+                            </div>
+                            <apex:form styleClass="slds-text-align--left">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label" for="text-input-01">{!$Label.partner_InviteCodeLabel }</label>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputText styleClass="slds-input" value="{!invitationId}" id="invitationId"></apex:inputText>
+                                    </div>
+                                </div>
+                                <div class="slds-text-align--center">
+                                    <apex:commandButton styleClass="slds-button slds-button--brand" action="{!initInvite}" value="Proceed!" reRender="invite-wrapper" status="showProgress" />
+                                </div>
+                            </apex:form>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF(membershipInfo==null && invitationId!=null, true, false)}">
+                            <div class="slds-box slds-box--x-small slds-theme--error">
+                                <p>{!$Label.partner_InviteCodeExpired}</p>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel styleClass="slds-text-align--center slds-size--1-of-1" id="welcome-msg" rendered="{! IF(membershipInfo!=null, true, false)}">
+                            <h1 class="slds-text-heading--large slds-p-bottom--small">Welcome <span class="slds-type-focus">{!membershipInfo.Contact__r.Name}!</span></h1>
+                            <p class="slds-text-body--regular slds-p-bottom--small"> You have been invited to join </p>
+                            <h2 class="slds-text-heading--medium slds-p-bottom--small">{!membershipInfo.Community__r.Name}</h2>
+                            <button class="slds-button slds-button--brand" onClick="proceedToRegister();return false;">{!$Label.partner_proceedWithRegisterLabel}</button>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="register" styleClass="slds-container--center slds-container--small slds-grid slds-wrap slds-grid--vertical-align-center slds-grid--pull-padded-large" style="min-height:300px;" rendered="{!IF(currentView=='REGISTER', true, false)}">
+                        <apex:outputPanel styleClass="slds-text-align--center slds-size--1-of-1 slds-col--rule-bottom" rendered="{!IF(sageIdentity!=null, true, false)}">
+                            <p class="slds-text-body--regular slds-p-bottom--small">{$Label.partner_existingSageIDMessage}
+                            </p>
+                            <button class="slds-button sage" onClick="doExistingSageUserReg();return false;">{$Label.partner_loginWithSageIDLabel}</button>
+                        </apex:outputPanel>
+                        <apex:outputPanel styleClass="slds-text-align--center slds-align-middle slds-size--1-of-1" rendered="{!IF(sageIdentity==null, true, false)}">
+                            <button class="slds-button sage" onClick="doNewSageUserReg();return false;">{!$Label.partner_signupWithSageIDLabel}</button>
+                        </apex:outputPanel>
+                        <div class="slds-text-align--center slds-p-vertical--medium slds-align-middle slds-size--1-of-1 ">
+                            <h1 class="slds-text-heading--label">OR</h1>
+                        </div>
+                        <div class="slds-col--padded slds-text-align--center slds-align-middle slds-size--1-of-2">
+                            <button class="slds-button slds-button--brand facebook" onClick="doFacebookConnect();return false;">{!$Label.partner_signupWithFacebookLabel}</button>
+                        </div>
+                        <div class="slds-col--padded slds-text-align--center slds-align-middle slds-size--1-of-2">
+                            <button class="slds-button slds-button--brand google" onClick="handleGoogleConnect();return false;">{!$Label.partner_signupWithGoogleLabel}</button>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:outputPanel>
+                    <footer>
+            <div class="slds-text-align--center slds-text-body--small slds-p-bottom--large">
+         <p>
+         <a href="http://www.sage.com/privacy-policy-and-cookies">Privacy Policy</a> | <a href="http://www.sage.com/legal-statement">Terms &amp; Conditions</a></p>
+<p>© The Sage Group plc 2016. All Rights Reserved.</p>
+<p>The Sage Group plc, a company registered in the United Kingdom, with registered number 02231246 and with its registered office at North Park, Newcastle Upon Tyne NE13 9AA</p>
+            </div>
+        </footer>
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->
+        <!-- / REQUIRED SLDS WRAPPER -->
+        <script>
+        function proceedToRegister() {
+            navToRegister();
+        }
+
+        function doExistingSageUserReg() {
+            startExistingSageUserReg();
+        }
+
+        function doNewSageUserReg() {
+            startNewSageUserReg();
+        }
+
+        function doFacebookConnect() {
+            handleFacebookConnect();
+        }
+
+        function doGoogleConnect() {
+            handleGoogleConnect();
+        }
+        </script>
+    </body>
+
+    </html>
+</apex:page>

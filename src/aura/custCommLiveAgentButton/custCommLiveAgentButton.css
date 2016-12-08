@@ -1,0 +1,30 @@
+/*.THIS .uiButton {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}*/
+
+.THIS.hidden {
+	display: none;
+}
+
+.THIS button.laButton {
+    color : t(colorTextButtonBrand);
+    font-weight : t(fontWeightBold);
+    padding: 5px;
+}
+
+.THIS button.agentAvailable, .THIS button.agentAvailable:visited {
+    background-color: #41A940;
+}
+
+.THIS button.agentAvailable:hover, .THIS button.agentAvailable:active, .THIS button.agentAvailable:focus {
+    background-color: #41A940;
+    color: t(colorTextButtonBrand);
+}
+
+.THIS button.agentUnavailable {
+    background-color: #51534A;
+}

@@ -1,0 +1,31 @@
+<apex:page controller="zqu.PaymentPageCallbackController" extensions="PaymentPageCallbackExtension" showHeader="false" sidebar="false">
+    <apex:includeScript value="{!$Resource.zqu__jquery_1_9_1}" />
+    <apex:form >
+	<apex:actionRegion >
+	    <apex:actionFunction action="{!setParams}" name="setParams" oncomplete="processParentCallback();">
+	        <apex:param name="objectId" assignTo="{!objectId}" value="" />
+	        <apex:param name="paymentId" assignTo="{!paymentId}" value="" />
+	    </apex:actionFunction>
+	</apex:actionRegion>
+	<script>   
+		function callback() {
+			var jsonObj = JSON.parse('{!callbackParameterString}');
+         	setParams(jsonObj.quoteId, jsonObj.refId);
+		}
+
+		function processParentCallback(){
+			// Call the process callback method of the parent frame and pass the serialized callback parameters
+			if(parent.processCallback){
+				parent.processCallback('{!JSENCODE(callbackParameterString)}');
+			}
+		}
+      
+		// Execute the callback when the document finishes loading
+		var $jq = jQuery.noConflict();
+		$jq(function() {
+			callback();
+		});
+    </script>
+	</apex:form>
+    <body style="background-color: rgb(248, 248, 248);" />  
+</apex:page>

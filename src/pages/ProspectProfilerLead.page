@@ -1,0 +1,3 @@
+<apex:page standardController="Lead">
+<apex:iframe src="https://seure.eloqua.com/pp/pp.aspx?emailAddress=(!lead.email"/>
+</apex:page>

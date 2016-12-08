@@ -1,0 +1,26 @@
+<!-- 
+@description see //aura:component[description]
+@author Arturs Gusjko <arturs.gusjko@bettercloudsolutions.co.uk>
+-->
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="CustCommSubscriptionUpgradeBtnCtrl" access="GLOBAL" extends="c:custCommGenericComponent" description="Renders a new upgrade subscription button and handles subscription upgrade initiation process.">
+
+    <c:requireLightningDesignSystem />
+
+    <aura:attribute name="isButtonVisible" type="Boolean" default="false" access="private" description="Determines whether the button should be displayed on the page." />
+
+    <aura:attribute name="isDisabled" type="Boolean" required="false" default="false" access="private" description="Determines whether the button is actionable." />
+	
+    <aura:registerevent name="smCaseCreated" type="c:custCommSubscriptionManagementCaseCreated" access="public"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:handler event="c:custCommSubscriptionManagementCaseCreated" action="{! c.smCaseCreated }" />
+
+    
+    <c:custCommButton label="{! $Label.c.CustComm_Subscription_Upgrade_Button }" class="{! ( v.isButtonVisible ? ' slds-show' : 'hidden') }" press="{! c.showConfirmation }" disabled="{! v.isDisabled }" />
+
+    <c:custCommConfirmDialog aura:id="upgradeConfirmation" dialogConfirmed="{! c.upgradeSubscription }" headerLabel="{! $Label.c.CustComm_Subscription_Upgrade_Modal_Header }" confirmLabel="{! $Label.c.YesBtnLabel }" rejectLabel="{! $Label.c.NoBtnLabel }">
+        <p>{! $Label.c.CustComm_Subscription_Upgrade_Modal_Body }</p>
+    </c:custCommConfirmDialog>
+
+</aura:component>

@@ -1,0 +1,7 @@
+<design:component label="Registration button for unauthorized users">
+    <design:attribute name="label" description="Label of button"/>
+    <design:attribute name="registrationUrl" description="URL for Sage Registration"/>
+    <design:attribute name="customPermissionName" description="Custom permission assigned to guest users"/>
+	<design:attribute name="buttonIconName" label="Icon Name" description="SLDS Icon Name e.g. settings"/>
+    <design:attribute name="buttonIconType" label="Icon Type" description="SLDS Icon Type e.g. utility"/>
+</design:component>

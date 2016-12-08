@@ -1,0 +1,34 @@
+<apex:page standardController="zqu__Quote__c" extensions="PayNowQuoteControllerExtension">
+    
+    <script>
+        
+    </script>
+    <apex:form id="payNowDetails">
+         <apex:pageBlock >
+            <apex:pageBlockSection >
+                <!--<apex:pageBlockSectionItem rendered="{!IF(quoteHasReceivedPaymentMethod, false, true)}">
+                    <apex:outputLink id="btnCreatePayNowLink" styleClass="btn" value="{!selectPdfLink}" style="text-decoration:none;padding:4px;" target="_top" >
+                            <apex:actionSupport event="onClick" />Select Quote To Email
+                        </apex:outputLink>                   
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!IF(quoteHasReceivedPaymentMethod, true, false)}">
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>-->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Status:</apex:outputLabel>
+                    <apex:outputText >{!status}&nbsp; &nbsp; {!message}</apex:outputText>
+                     
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!hasToken}" >
+                    <apex:outputLabel >Link:</apex:outputLabel>                    
+                    <apex:outputLink value="{!paynowlink}&viewerType=true" target="_blank">View In PayNow</apex:outputLink>                    
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+                    
+    </apex:form>
+           
+</apex:page>

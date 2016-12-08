@@ -1,0 +1,87 @@
+<!--
+@description Enable liveagent button and communicates button state to the parent window.
+
+@author Sridhar Subramaniam, Arturs Gusjko
+-->
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <apex:variable var="onlineBtnId" value="{! 'liveagent_button_online_' + $CurrentPage.parameters.buttonId }" />
+    <apex:variable var="offlineBtnId" value="{! 'liveagent_button_offline_' + $CurrentPage.parameters.buttonId }" />
+    <span id="{! onlineBtnId }"></span>
+    <span id="{! offlineBtnId }"></span>
+    <script type="text/javascript" src="{! $CurrentPage.parameters.deploymentUrl }"></script>
+    <script type="text/javascript">
+        function log() {
+            if( debugMode && console && console.log) console.log.apply(console, Array.from(arguments));
+        }
+
+        function dir(obj) {
+            if( debugMode && console && console.dir) console.dir(obj);
+        }
+
+        var buttonId = '{! $CurrentPage.parameters.buttonId }';
+        var deploymentId = '{! $CurrentPage.parameters.deploymentId }';
+        var orgId = '{! $CurrentPage.parameters.orgId }';
+        var deploymentUrl = '{! $CurrentPage.parameters.deploymentUrl }';
+        var liveAgentInitUrl = '{! $CurrentPage.parameters.liveAgentInitUrl }';
+        var debugMode = {! IF( $CurrentPage.parameters.debugMode == '1', 'true', 'false' ) };
+
+        // user popup
+        var userInfo = {
+            name: '{! $CurrentPage.parameters.userName }',
+            contactId: '{! $CurrentPage.parameters.contactId }'
+        };
+
+        if(debugMode) liveagent.enableLogging();
+
+        if( userInfo.contactId ) {
+            log('User Info found');
+            liveagent.setName(userInfo.name);
+            liveagent.addCustomDetail('Contact ID', userInfo.contactId, false);
+
+            liveagent.findOrCreate("Contact")
+                .map("Id", 'Contact ID', true, true, false)
+                .saveToTranscript("Contact")
+                .showOnCreate();
+        }
+
+        window.addEventListener('message', function(event) {
+            log('Received Event for Chat Message:');
+            dir(event);
+            if( event.origin === window.location.origin ) {
+                switch( event.data.type ) {
+                    case 'START_CHAT':
+                        console.log( 'Starting Chat' );
+                        liveagent.startChat(buttonId);
+                }
+            }
+        }); 
+    
+        // Button Callback functions.
+        var buttonCallback = function(e){
+            log('Button Status Change Event');
+            dir(e);
+            switch(e) {
+                case liveagent.BUTTON_EVENT.BUTTON_AVAILABLE:
+                    log('Sending Button Available Message');
+                    window.parent.postMessage( {'status':'LIVEAGENT_BUTTON_AVAILABLE'}, window.location.origin );
+                    break;
+                case liveagent.BUTTON_EVENT.BUTTON_UNAVAILABLE:
+                    log('Sending Button Unavailable Message');
+                    window.parent.postMessage( {'status':'LIVEAGENT_BUTTON_UNAVAILABLE'}, window.location.origin );
+                    break;
+            }
+        }
+        
+                
+        if (!window._laq) { window._laq = []; }
+        
+        window._laq.push(function(){
+            liveagent.showWhenOnline(buttonId, document.getElementById('{! onlineBtnId }'));
+            liveagent.showWhenOffline(buttonId, document.getElementById('{! offlineBtnId }'));
+        });
+        liveagent.addButtonEventHandler(buttonId, buttonCallback);
+
+        liveagent.init(liveAgentInitUrl, deploymentId, orgId);       
+        
+    </script>
+ </apex:page>

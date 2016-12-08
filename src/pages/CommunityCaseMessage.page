@@ -1,0 +1,7 @@
+<apex:page controller="CommunityCaseMessageController" showHeader="false" sidebar="false" language="{!lang}">
+ <div style="text-align:center">
+    <h1 style="text-decoration:none;font-size:13px;">
+        {!$Label.Case_record_message}
+    </h1>
+ </div>
+</apex:page>

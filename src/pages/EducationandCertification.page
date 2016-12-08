@@ -1,0 +1,75 @@
+<apex:page >
+    <script type="text/javascript">
+        window.open('http://sageu.com', '_blank');	
+    </script>
+    <html>
+        <head>
+            <style>
+                h3{font-size:18px;}
+            </style>
+        </head>
+        <body>
+            <h3>
+                If you don't see a new tab, please disable pop-ups and click "Education Certification" above.<br/><br/>
+                Instructions to disable pop-ups:
+            </h3><br/><br/>
+            <b>Google Chrome</b><br/>
+            <ul>
+            <ol>    
+            <li>Click the menu button and choose <b>Settings</b>.</li>
+            <li>Scroll to <b>Privacy</b>, Click on <b>Content settings</b>.</li>
+            <li>Scroll to <b>Pop-ups</b>.</li>
+            <li>Check <b>Allow all sites to show pop-ups</b>.</li>
+            <li>Click <b>Done</b>.</li>
+            <li>Close <b>Settings</b> tab.</li>
+            </ol>
+            </ul>    
+                <br/>
+            
+            <b>Mozilla Firefox</b><br/>
+            <ul>
+                <li>Windows</li><br/>
+            <ol>
+            <li>Click the menu button and choose <b>Options</b>.</li>
+            <li>Select the <b>Content</b> panel.</li>
+            <li>Uncheck the box next to <b>Block pop-up windows</b> to disable the pop-up blocker altogether.</li>
+            <li>Close <b>Options</b> tab.</li>
+            </ol>
+            <br/>
+    
+                <li>Mac</li><br/>
+            <ol>
+            <li>Click the menu button and choose <b>Preferences</b>.</li>
+            <li>Select the <b>Content</b> panel.</li>
+            <li>Uncheck the box next to <b>Block pop-up windows</b> to disable the pop-up blocker altogether.</li>
+            <li>Close <b>Preferences</b> tab.</li>
+            </ol>
+            </ul>
+                <br/>
+    
+        	<b>Internet Explorer</b><br/>
+            <ul>
+            <ol>
+            <li>Click <b>Tools</b> menu.</li>
+            <li>Press Alt-T if you don't see a menu.</li>
+            <li>Click <b>Internet Options</b>.</li>
+            <li>Click <b>Privacy</b> tab.</li>
+            <li>Under <b>Pop-up Blocker</b>, uncheck <b>Turn on Pop-up Blocker</b>.</li>
+            <li>Click OK.</li>
+            </ol>
+            </ul>    
+                <br/>
+    
+        	<b>Safari</b><br/>
+            <ul>
+            <ol>
+            <li>Click <b>Safari</b> in the menu bar.</li>
+            <li>Click <b>Preferences</b>.</li>
+            <li>Click the <b>Security</b> tab.</li>
+            <li>In the <b>Web content</b> selection, uncheck the box next to <b>Block pop-up windows</b>.</li>
+            <li>Close <b>Preferences</b> window.</li>
+            </ol>
+            </ul> 
+        </body>
+    </html>
+</apex:page>

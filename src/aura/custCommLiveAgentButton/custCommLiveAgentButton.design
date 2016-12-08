@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="buttonAPIName" label="Button Name" description="Live Agent Button API Name"/>
+    <design:attribute name="deploymentAPIName" label="Deployment Name" description="Live Agent Deployment API Nmae"/>
+    <design:attribute name="deploymentUrl" label="Live Agent Deployment URL" description="The url form live agent deployment that usually ends with /deployment.js"/>
+    <design:attribute name="liveagentInitUrl" label="Live Agent Chat Init URL" description="The url from live agent deployments which usually ends with /chat"/>
+    <design:attribute name="debugMode" label="Debug Mode" description="If set to true, enables Live agent debug mode."/>
+    <design:attribute name="popupContact" label="Enable Contact Screen Pop" description="If set to true, pops up contact to the agent." default="false"/>
+</design:component>

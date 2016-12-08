@@ -1,0 +1,13 @@
+<apex:page >
+    <apex:stylesheet value="{!URLFOR($Resource.sageLiveHeaderFooter_1209)}" />
+    <div class="homepage-bottom">
+        <div class="homepage-bottom-main">
+            <div class="home-page-bottom-actions">
+                <div class="action-btn">
+                    <c:CommunityLiveAgent />
+                    {!$Label.Live_Support_Chat}
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:page>

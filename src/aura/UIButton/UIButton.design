@@ -1,0 +1,8 @@
+<design:component label="UI Button">
+    <design:attribute name="buttonLabel" label="Label" description="Label for Button" required="true"/>
+    <design:attribute name="buttonIconName" label="Icon Type" description="SLDS Icon Name e.g. settings"/>
+    <design:attribute name="buttonIconType" label="Icon Name" description="SLDS Icon Type e.g. utility"/>
+    <design:attribute name="eventName" label="Event Name" description="Event Name" required="true"/>
+    <design:attribute name="eventParamsJson" label="Event Params" description="Event Params"/>
+    <design:attribute name="style" label="Button Inline CSS Style" description="Button Inline CSS Style" default="border-radius: 2px;padding: 15px 0;background-color: #cc0000;border: none;font-weight: 700;color: #ffffff;font-size: 1em;margin: 0;width: 100%;"/>
+</design:component>

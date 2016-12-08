@@ -1,0 +1,9 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes" description="Generic component used to display a spinner in customer communities">
+    
+    <aura:attribute name="requests" type="String[]" description="List of spinner requests" access="PRIVATE"/>
+    
+    <aura:handler event="c:custCommShowSpinner" action="{! c.addRequestor }" />
+	<aura:handler event="c:custCommHideSpinner" action="{! c.removeRequestor }" />
+	
+    <c:spinner theme="brand" show="{! v.requests.length &gt; 0 }" />
+</aura:component>

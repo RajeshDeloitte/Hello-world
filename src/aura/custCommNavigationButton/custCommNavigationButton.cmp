@@ -1,0 +1,13 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes" extends="c:custCommGenericComponent">
+    
+    <aura:attribute name="label" type="String" description="Label for button" required="true" access="GLOBAL"/>
+    <aura:attribute name="url" type="String" description="URL to navigate to" required="true" access="GLOBAL"/>
+    <!-- Attributes for the Icons -->
+    <aura:attribute name="buttonIconName" type="String" description="SLDS Icon Name e.g settings" default=""/>
+    <aura:attribute name="buttonIconType" type="String" description="SLDS Icon type e.g utility" default=""/>
+    <aura:attribute name="linkRef" type="String" description="Href for the icon" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <c:custCommButton linkRef="{! v.linkRef }" press="{! c.navigate }">{! v.label }</c:custCommButton>
+</aura:component>

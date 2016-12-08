@@ -1,0 +1,127 @@
+<apex:page standardController="zqu__Quote__c" extensions="PayNowCreateTokenControllerExtension" id="createQuoteTokenPage" >     
+	<apex:includeScript value="/support/console/34.0/integration.js"/>    
+      <script>
+    	  document.addEventListener("DOMContentLoaded", function(event) { 
+              //setTitle();
+		  });
+    
+    	//function setTitle() {
+    		//sforce.console.setTabTitle('Select Quote To Email');
+    	//  }
+    
+    	  function checkIfInConsole(){
+              if (sforce.console.isInConsole()){
+              	return true;    
+              }
+              
+              return false;
+          }
+        	      
+          function cleanUp(input)
+          {
+              input.style.visibility = 'hidden';
+              document.getElementById('alreadySubmittedText').style.visibility = 'visible';
+              
+              var hiddenPdfValue = document.getElementById('createQuoteTokenPage:choosePdfForm:hdnSelectedPDFId');
+                                                                      
+              var tempValue = document.querySelector('input[name="rdoSelectPdf"]:checked').value;
+                                          
+              hiddenPdfValue.value = tempValue   
+              
+              var hiddenIsInConsole = document.getElementById('createQuoteTokenPage:choosePdfForm:hdnIsInConsole');
+              
+              hiddenIsInConsole.value = checkIfInConsole();
+              
+              return true;
+          }
+    
+    	  function disableMe(input) {        		
+        		input.disabled = 'disabled';
+        		// Use the Salesforce CSS style to make the button appear disabled
+        		input.className = 'btnDisabled';
+        		input.value = "Saving..."
+    		}
+    
+         function selectRadioButtonWhenPdfIsViewed(radioButtonId)
+         {
+             document.getElementById(radioButtonId).checked = true; 
+             window.open("/servlet/servlet.FileDownload?file=" + radioButtonId);
+         }
+      </script>
+      <apex:form onsubmit="CreatePayNowToken" id="choosePdfForm" >
+           <apex:inputHidden value="{!opportunityId}" id="hdnOpportunityId"/>
+           <apex:inputHidden value="{!quoteId}" id="hdnQuoteId"/>
+           <apex:inputHidden value="{!selectedPDF}" id="hdnSelectedPDFId"/>
+           <apex:inputHidden value="{!isInConsole}" id="hdnIsInConsole"/>
+           
+           
+
+          <apex:pageBlock >  
+              <apex:pageMessages />  
+              <apex:pageMessage title="Please ensure that the total price in the PDF matches the total price of the quote."
+                                summary=""
+                                detail="" rendered="{!IF(hasValidPaymentMethod && !quoteHasReceivedPaymentMethod, true, false)}"
+                                severity="Warning" strength="1" />  
+              <apex:pageMessage title="Payment method has been provided for this quote."
+                                summary=""
+                                detail="" rendered="{!IF(quoteHasReceivedPaymentMethod, true, false)}"
+                                severity="info" strength="1" />  
+              
+          </apex:pageBlock>          
+           <apex:pageBlock title="Select Quote To Email" id="mainPageBlock" >              
+               <apex:pageBlock title="Quote" >
+                   <apex:pageBlockTable value="{!listQuote}" var="quote">
+                      <apex:column value="{!quote.Name}"/>
+                       <apex:column headerValue="Total Price" value="{!quote.zqu__Previewed_Total__c}" />
+                      <apex:column value="{!quote.zqu__Number__c}"/>
+                      <apex:column value="{!quote.zqu__Status__c}"/>
+                      <apex:column value="{!quote.zqu__InitialTerm__c}"/>
+                      <apex:column headervalue="Renewal Term" value="{!quote.zqu__RenewalTerm__c}" />
+                      <apex:column headervalue="Valid Until" value="{!quote.zqu__ValidUntil__c}" />
+                      <apex:column headervalue="Bill to Contact" value="{!quote.zqu__BillToContact__c}" />
+                   </apex:pageBlockTable>
+               </apex:pageBlock>
+        
+               <apex:variable var="attachmentCount" value="{!0}" />
+               <apex:pageBlock title="Select Quote PDF" id="pdfPageBlock">
+                   <apex:pageBlockTable value="{!listOfAttachments}" var="attachment" id="pdfTableBlock" >
+                                                                     
+                       <apex:column style="width:50px;" rendered="{!IF(attachmentCount == 0, true, false)}">                           
+                           <input id="{!attachment.id}"  name="rdoSelectPdf" type="radio" value="{!attachment.id}" checked="true"/>                           
+                       </apex:column>
+                       
+                       <apex:column style="width:50px;" rendered="{!IF(attachmentCount == 0, false, true)}">                           
+                           <input id="{!attachment.id}"  name="rdoSelectPdf" type="radio" value="{!attachment.id}"/>
+                           
+                       </apex:column>
+                       
+                       <apex:column headerValue="Name of Attachment   (Click to view)" >
+                            <!--<apex:outputLink onclick="selectRadioButtonWhenPdfIsViewed('{!attachment.id}');" value="{!URLFOR($Action.Attachment.Download,attachment.id)}" target="_blank">{!attachment.Name}</apex:outputLink>-->
+                           <apex:outputLink onclick="selectRadioButtonWhenPdfIsViewed('{!attachment.id}');" value="#">{!attachment.Name}</apex:outputLink>
+                           
+                           
+                           <apex:variable var="attachmentCount" value="{!attachmentCount+1}" />
+                       </apex:column>                       
+                       <apex:column value="{!attachment.ContentType}"/>
+                       <apex:column value="{!attachment.CreatedDate}"/>              
+                   </apex:pageBlockTable>
+               </apex:pageBlock>
+              
+               <apex:pageBlock rendered="{!IF(attachmentCount == 0, true, false)}">  
+                   <apex:pageMessage title="Must Create Quote PDF"
+                                    summary="There are no PDF files associated with this quote."
+                                    detail="From the 'Quote Detail' screen click the 'Generate PDF' button to create a PDF.  Only signed PDFs should be sent to the customer."
+                                    severity="error" strength="1" />  
+                   
+               </apex:pageBlock>
+               
+               <apex:pageBlockButtons location="bottom" > 
+                   <span id="alreadySubmittedText" style="visibility:hidden">Already submitted... Please wait.</span>
+                   <apex:commandButton id="sendEmailBtn" rendered="{!IF(attachmentCount != 0 && hasValidPaymentMethod && !quoteHasReceivedPaymentMethod, true, false)}" value="Send Payment Link To Customer" action="{!createPayNowToken}"  onclick="cleanUp(this);" />                                      
+                   <apex:commandButton action="{!cancel}" value="Cancel"/>                   
+               </apex:pageBlockButtons>                                 
+           </apex:pageBlock> 
+      </apex:form>
+    
+    
+</apex:page>

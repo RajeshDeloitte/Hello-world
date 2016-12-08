@@ -1,0 +1,12 @@
+<!--
+    @description Standard ui:buttion with customer community branding.
+    @author Arturs Gusjko <arturs.gusjko@bettercloudsolutions.co.uk>
+-->
+<aura:component extends="ui:button" description="Standard ui:button with customer community branding.">
+    <aura:attribute name="linkRef" type="String" description="SLDS Icon type e.g utility" default=""/>
+   	
+	<aura:if isTrue="{! !empty(v.linkRef)}">
+    	<c:svg xlinkHref="{!v.linkRef}" class="slds-button__icon slds-button__icon--left slds-icon--small" ariaHidden="true" />
+	</aura:if>
+    {! v.body }
+</aura:component>

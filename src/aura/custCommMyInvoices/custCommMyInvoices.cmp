@@ -1,0 +1,33 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes" description="Component to show my invoices" controller="ZuoraInvoiceUtility" extends="c:custCommGenericComponent">
+    
+    <aura:attribute name="columnDisplayNames" default="Id, Invoice Date, Due Date, Status, Total Amount" type="String" description="Display names for columns" access="GLOBAL" />
+    <aura:attribute name="columnDisplayFields" default="Id, Zuora__InvoiceDate__c, Zuora__DueDate__c, Zuora__Status__c, Zuora__TotalAmount__c" type="String" description="Fields which map to columns" access="GLOBAL" />
+    <aura:attribute name="sortField" default="Zuora__InvoiceDate__c DESC" type="String" description="Field to sort columns by" access="GLOBAL" />
+    <aura:attribute name="limit" default="10" type="String" description="Maximum number of invoices to display" access="GLOBAL" />
+    <aura:attribute name="invoiceIdField" default="Zuora__Zuora_Id__c" type="String" description="Field which stores the zuora invoice id" access="GLOBAL" />
+    
+    <aura:attribute name="headers" type="String[]" description="Split header values" access="PRIVATE" />
+    <aura:attribute name="fieldNames" type="String[]" description="Split header values" access="PRIVATE" />
+    <aura:attribute name="records" type="Object[]" description="Records" access="PRIVATE" />
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />
+    
+    <table class="slds-table slds-table--bordered">
+        <thead>
+            <tr class="slds-text-heading--label">
+                <aura:iteration items="{! v.headers }" var="headerColumn">
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{! headerColumn }</div>
+                    </th>
+                </aura:iteration>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{! v.records }" var="record">
+                <c:custCommInvoiceRow fieldNames="{! v.fieldNames }" 
+                    record="{! record }" 
+                	invoiceIdField="{! v.invoiceIdField }"/>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

@@ -1,0 +1,25 @@
+<aura:component controller="CommunityUtilities" implements="forceCommunity:availableForAllPageTypes" access="GLOBAL" extends="c:custCommGenericComponent">
+	<!-- SF Lightning Design System -->
+    <c:requireLightningDesignSystem />
+    <aura:attribute name="cancelReasons" type="String[]" default="[]" description="The list of reason for cancelling the subscription" access="GLOBAL" />
+    <aura:attribute name="reasonSelected" type="String" default="" description="The cancellation reason selected" access="GLOBAL" />
+    <aura:attribute name="isDisabled" type="Boolean" required="false" default="false" access="GLOBAL" description="Inactivates button when truthy." />
+    <aura:attribute name="isVisible" type="Boolean" required="false" default="false" access="GLOBAL" description="Should the button be displayed" /> 
+    
+    <aura:handler name="onChange" event="c:basicEvent" action="{!c.handleChangeEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+
+    <aura:registerevent name="smCaseCreated" type="c:custCommSubscriptionManagementCaseCreated" access="GLOBAL"/>
+
+    <aura:handler event="c:custCommSubscriptionManagementCaseCreated" action="{! c.smCaseCreated }" />
+    
+    <!--<c:custCommButton press="{!c.showConfirmation}" class="{! ( v.isButtonVisible ? ' slds-show' : 'hidden') }" label="{!$Label.c.CancelSubscriptionBtnLabel}"/> --> 
+    <aura:if isTrue="{! v.isVisible }">
+    	<c:custCommPermissionBasedButton label="{!$Label.c.CancelSubscriptionBtnLabel}" customPermissionName="Manage_Subscriptions" press="{!c.showConfirmation}" disabled="{!v.isDisabled}" aura:id="cancelButton" />
+    </aura:if>
+    
+    <c:custCommConfirmDialog aura:id="cancelSubscriptionConfirmation" dialogConfirmed="{! c.cancelSubscription }" headerLabel="{! $Label.c.CancelSubscriptionHeaderLabel }" confirmLabel="{! $Label.c.YesBtnLabel }" rejectLabel="{! $Label.c.NoBtnLabel }">
+        <p>{! $Label.c.CancelSubscriptionConfirmationMsg }</p>
+       	<c:custCommSelect label="{!$Label.c.CustComm_Cancel_Subscription_Reason}" required="true" options="{!v.cancelReasons}"/>
+    </c:custCommConfirmDialog>
+</aura:component>

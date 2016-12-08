@@ -1,0 +1,40 @@
+.THIS.communityHeaderBar {
+    padding : 15px;
+    z-index: 100;
+    background-color: t(colorBackgroundButtonBrand);
+    color: t(colorTextButtonBrand);
+}
+
+.THIS .communitySelect{
+    width: 250px;
+    padding : 15px;
+    color : inherit;
+    font-weight : t(fontWeightBold);
+}
+
+.THIS .communityList{
+    z-index: 90;
+    margin-top: 15px;
+    background-color: t(colorBackgroundButtonBrand);
+}
+
+.THIS .communityList > .communityList{
+    margin-top: 0px;
+}
+
+.THIS .communitySelect:hover, .THIS .communityOption > a:hover {
+    background-color: t(colorBackgroundButtonBrandHover);
+}
+
+.THIS .communityOption > a{
+    height: inherit;
+    z-index: 90;
+    color : inherit;
+    padding : 15px;
+    background-color: t(colorBackgroundButtonBrand);
+    font-weight : t(fontWeightBold);
+}
+
+.THIS.hidden{
+    display : none;
+}

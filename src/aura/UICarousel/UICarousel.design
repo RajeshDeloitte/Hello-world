@@ -1,0 +1,5 @@
+<design:component label="Carousel/Slider">
+    <design:attribute name="carouselInputJson" label="InputJson" description='[{"image":"https://placeimg.com/640/480/nature","title":"Nature","description":"Nature Description from Builder Input","url":"http://www.google.com"},{"image":"https://placeimg.com/640/480/tech","title":"Technology","description":"Tech Description from Builder Input","url":"http://www.yahoo.com"},{"image":"https://placeimg.com/640/480/arch","title":"Architecture","description":"Arch Description from Builder Input"},{"image":"https://placeimg.com/640/480/people","title":"People","description":"People Description from Builder Input"}]'/>
+    <design:attribute name="autoPlay" label="AutoPlay?" default="false"/>
+    <design:attribute name="autoPlayInterval" label="Auto Play Interval" description="Auto Play Interval" default="2000"/>
+</design:component>

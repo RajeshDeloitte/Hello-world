@@ -1,0 +1,13 @@
+<apex:page showHeader="false" id="SiteCommunityHelpTemplate">
+  <apex:stylesheet value="{!URLFOR($Resource.sageResources, 'sageLiveHeaderFooter_1209.css')}"/>
+  <apex:insert name="header">
+    <c:SiteCommunityHelpHeader />
+    <hr/>
+  </apex:insert>
+  <apex:insert name="body"/>
+  <apex:insert name="footer">
+    <hr/>
+    <c:SiteCommunityHelpFooter />
+    <site:googleAnalyticsTracking />
+  </apex:insert>
+</apex:page>

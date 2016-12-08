@@ -1,0 +1,6 @@
+<apex:page >
+    <apex:canvasApp applicationName="Sociabble"
+        height="900px" width="800px"
+        border="0" scrolling="no"
+        parameters="{socAction:'{!$CurrentPage.Parameters.socAction}',socParams:'{!$CurrentPage.Parameters.socParams}'}"/>
+</apex:page>

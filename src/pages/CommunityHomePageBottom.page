@@ -1,0 +1,166 @@
+<apex:page language="{!lang}" controller="CommunityHomePageBottomController">
+    <apex:stylesheet value="{!URLFOR($Resource.sageLiveHeaderFooter_1209)}"/>
+    <!-- Hide the Chatter Feed action items by overriding their styles to display:none -->
+    <style>
+        .feedDropDown {
+            display:none;
+        } 
+        .chatterHover {
+            display:none;
+        }
+        .feeditemActionMenu {
+            display:none;
+        }
+        .view {
+            display:none;
+        }         
+        .feeditemactionlink {
+            display:none;
+        }        
+        .feeditemseparatingdot {
+            display:none;
+        }
+        .feedcommentactions {
+            display:none;
+        } 
+        .commentactionlink {
+            display:none;
+        }
+        .newCommentContainer {
+            display:none;
+        }
+        .homepage-bottom-side a:hover {
+            color: #015BA7;
+            text-align:center;
+            text-decoration: underline;
+        }
+        .homepage-bottom-side a {
+            color: #134B93; 
+            text-align:center;       
+            text-decoration: none;
+        }  
+    </style>   
+    <!-- Amend the remaining Chatter links to re-display the window or hide them -->    
+    <script> 
+        var previousOnload = window.onload; 
+        window.onload = function() { 
+            if (previousOnload) { 
+                previousOnload(); 
+            } 
+            // add _parent to all anchor tags within the ChatterFeed so they re-display the window
+            // rather than displaying within the frame and duplicating the header and footer 
+            var as = document.getElementById('ChatterFeedId').getElementsByTagName('a');
+            for(i=0;i<as.length;i++){
+                as[i].setAttribute('target','_parent');
+            }
+            //hide any Share Post span tags (no class to hide on the span tag or the parent anchor tag)
+            var as = document.getElementById('ChatterFeedId').getElementsByTagName('span');
+            for(i=0;i<as.length;i++){
+                if (as[i].getAttribute('title') == 'Share Post'){
+                    as[i].setAttribute('style','display:none');
+                }
+            }            
+            //hide the feeditemcommentplaceholder Div tags (need to override the inline style attribute) 
+            var as = document.getElementById('ChatterFeedId').getElementsByClassName('feeditemcommentplaceholder');
+            for(i=0;i<as.length;i++){
+                as[i].setAttribute('style','display:none');
+            }
+        } 
+    </script>
+    <div class="homepage-bottom">
+        <div class="homepage-bottom-main">
+            <div class="home-page-bottom-actions">
+                <div class="action-btn">                      
+                    <a href="{!$Setup.CommunityHomePage__c.BrowseKnowledge__c}" TARGET="_parent" style="text-decoration:none;">                  
+                        <apex:image id="browseKnowledge" value="{!$Resource.BrowseArticlesIcon}"/>                                               
+                    </a>
+                    {!$Label.Browse_Articles}
+                </div>
+                <div class="action-btn">
+                    <c:CommunityLiveAgent />
+                    {!$Label.Live_Support_Chat}
+                </div>
+                <div class="action-btn">
+                    <a href="{!$Setup.CommunityHomePage__c.SubmitCase__c}" TARGET="_parent" style="text-decoration:none;">                    
+                        <apex:image id="newCase" value="{!$Resource.SubmitNewCaseIcon}"/>                                               
+                    </a>
+                    {!$Label.Create_New_Case}                      
+                </div>
+            </div>
+            <div class="home-page-bottom-articles">
+                <table border="0">
+                    <tr>
+                        <td style="padding-right: 20px;">
+                            <apex:outputPanel layout="block">
+                                <table class="article-list" style="border-collapse:collapse">
+                                    <thead>
+                                        <th style="font-weight:bold;font-size:120%;height:30px">{!$Label.Latest_Articles}</th>
+                                    </thead>
+                                    <tbody>
+                                        <knowledge:articleList articleVar="article" categories="" sortBy="lastUpdated" pageSize="5">
+                                            <tr>
+                                                <td><a style="text-decoration:none;color:#63AADC;padding-left:5px;font-size:100%;" href="{!URLFOR($Action.KnowledgeArticle.View, article.id)}" TARGET="_parent">{!article.title}</a></td>
+                                            </tr>
+                                        </knowledge:articleList>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                        </td>
+                        <td>
+                            <apex:outputPanel layout="block">
+                                <table class="article-list" style="border-collapse:collapse">
+                                    <thead>
+                                        <th style="font-weight:bold;font-size:120%;height:30px">{!$Label.Most_Popular_Articles}</th>
+                                    </thead>
+                                    <tbody>
+                                        <knowledge:articleList articleVar="article" categories="" sortBy="lastUpdated" pageSize="5">
+                                            <tr>
+                                                <td><a style="text-decoration:none;color:#63AADC;padding-left:5px;font-size:100%;" href="{!URLFOR($Action.KnowledgeArticle.View, article.id)}" TARGET="_parent">{!article.title}</a></td>
+                                            </tr>
+                                        </knowledge:articleList>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </div>            
+        </div>
+        <div id="ChatterFeedId" class="homepage-bottom-side">
+            <apex:outputPanel layout="block" style="overflow:auto;height:350px;width:300px;">
+                <h4>
+                    <apex:outPutText value="{!$Label.Join_The_Conversation}" /><br/>
+                </h4>                    
+                <table style="border-collapse:collapse;">
+                    <tr>
+                        <td>
+                            <a href="{!$Setup.CommunityHomePage__c.SageLiveCommunityGroup__c}" TARGET="_parent">                  
+                                <apex:image id="communityGroup" value="{!$Setup.CommunityHomePage__c.SageLiveCommunityGroupImage__c}" width="100" height="75"/>                                               
+                            </a>
+                        </td>
+                        <td>
+                            <b><a href="{!$Setup.CommunityHomePage__c.SageLiveCommunityGroup__c}" TARGET="_parent">                 
+                                <apex:outPutText value="{!$Setup.CommunityHomePage__c.SageLiveCommunityGroupName__c}"/>                                               
+                            </a></b>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #C3C3C3;">
+                        <td colspan="100%"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">&nbsp;</td>
+                    </tr>                      
+                    <tr>
+                        <td colspan="100%">&nbsp;</td>
+                    </tr>   
+                </table>                                                                          
+                <chatter:feed entityId="{!$Setup.CommunityHomePage__c.ChatterFeedId__c}" showPublisher="false" />
+            </apex:outputPanel>
+        </div>
+    </div>
+</apex:page>

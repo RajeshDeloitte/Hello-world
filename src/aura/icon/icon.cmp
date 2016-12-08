@@ -1,0 +1,2 @@
+<aura:component access="GLOBAL" implements="c:htmlAttributes,c:iconAttributes">
+</aura:component>

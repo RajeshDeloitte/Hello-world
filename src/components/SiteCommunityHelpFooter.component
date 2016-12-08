@@ -1,0 +1,25 @@
+<apex:component id="communityHelpFooterComponent">
+    <style>
+        .logoPowerSage{
+            position: relative;
+            top: -8px;
+            left: 10px
+        }
+        .powerBySage{
+            position: relative;
+            vertical-align : top;
+            text-align: left;
+            font-family: Arial;
+            font-size: x-small;
+            left: 5px
+        }
+     </style>
+  <apex:panelGrid cellpadding="0" cellspacing="0" width="100%" border="0" columns="1" id="thePoweredByTop">
+    <apex:panelGroup id="poweredBy" >
+      <apex:outputText style="" value="{!$Label.site.powered_by}" styleClass="powerBySage"/>
+      <apex:outputLink value="http://www.sage.com">
+          <apex:image url="{!$Resource.SageLogo}" alt="Sage Live Knowledgebase" width="74" height="27" title="Sage Live Knowledgebase" styleClass="logoPowerSage"/>     
+      </apex:outputLink>
+    </apex:panelGroup>
+   </apex:panelGrid>  
+</apex:component>

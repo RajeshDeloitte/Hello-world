@@ -1,0 +1,7 @@
+<design:component label="Google Analytics Shell">
+	<design:attribute name="trackingCode" label="GA Tracking Code" description="Google Analytics Tracking Code"></design:attribute>	
+    <design:attribute name="missingTrackingCodeMessage" label="Missing Tracking Code Message" description="Error Message to show when Tracking code isn't provided" default="Set Tracking Code for Google Analytics in Builder!"/>
+    <design:attribute name="gaProxyUrl" label="Google Analytics Proxy URL" description="URL for Google Analytics Proxy to get around Locker Service issue with GA. It will get trackingCode in URL param. Cannot take any additional params." default="/CommunityGoogleAnalyticsProxy"/>
+    <design:attribute name="debug" label="Debug" description="Flag to Show Debug Data in Console" default="false"/>
+
+</design:component>

@@ -1,0 +1,121 @@
+<!--
+<Summary>
+--------------------------------------------------------------------------------------------------------------------
+Author                            Date                        Description
+---------------------------------------------------------------------------------------------------------------------
+Kshipra                         09 Nov 2016                    To show and hide the addtocart button on addons page based on parent product
+-----------------------------------------------------------------------------------------------------------------------
+-->
+
+<apex:component allowDML="true" controller="cc_ecomm_ProductsSectionController">
+
+    <script id="cc_ecomm_ProductDetail-ProductsSection" type="text/template">
+  <div class="quick_wishlist">
+   {{#each this.pageData}}
+    <div class="quick_wishlist_item">
+     <div class="cart_item_viewport">
+      <a href="javascript:void(0);">
+       {{{displayImage this.mediaWrapper 'detailLink prodDetRel' alt=this.prodBean.name dataId=this.prodBean.sku}}}
+      </a>
+     </div>
+     <p class="leftside">
+      <a href="javascript:void(0);" class="productName detailLink" data-id="{{this.prodBean.sku}}">{{this.prodBean.name}}</a><br>
+      <strong>{{pageLabelMap 'ProductDetailsInc_SKU'}}</strong>&#160;{{this.prodBean.sku}}
+     </p>
+     <p class="rightside">
+            <input type="hidden" name="qtyIncrement" value="{{this.qtySingleIncrement}}" class="item_qtyIncrement" />
+            <input type="hidden" name="qtySkipIncrement" value="{{this.qtySkipIncrement}}" class="item_qtySkipIncrement" />
+      {{#ifDisplay 'PD.DsplPrc' }}
+                            {{#if this.showNewSubscriptionSelection}}
+                                <p class="price priceSubscription">
+                                    <strong>{{pageLabelMap 'Prod_SubsAlternatePrice' (price this.price) (price this.minSubPrice) (price this.maxSubPrice)}}</strong>
+                                </p>
+                            {{else}}
+                                {{#if this.displayPrice}}
+                                    <p class="price displayPrice">
+                                        {{pageLabelPrefixMap 'DisplayPrice_' this.displayPrice}}
+                                    </p>
+                                {{else}}
+                                    {{#if this.showPricing}}
+                                        {{#if this.price}}
+                                            <p><span><strong class="price">{{price this.price}}</strong>&#160;</span></p>
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/ifDisplay}}
+                         <div class="hidden action-{{this.prodBean.sku}} pull-right" >
+                             <button type="button" class="btn btn-primary addItemOptional" data-sku="{{this.prodBean.sku}}" data-seller="{{this.product.sellerID}}" data-price="{{this.price}}">{{pageLabelMap 'Component_MiniwishList_AddToCart'}}</button>
+                         </div>  
+     </p>
+    </div>
+   {{/each}}
+  </div>
+ </script>
+ <!-- Ecvom 264 - Bundle (Group) Sage 30 and reporting module --> 
+   <script type="text/javascript">
+   jQuery(function($){
+       CCRZ.uiProperties.prodSectionView.desktop.main.tmpl='cc_ecomm_ProductDetail-ProductsSection';
+       $(document).off('click','.addItemOptional').on("click",".addItemOptional", function(e) {
+                    var productDetailMap = {};
+                    var sku = $(this).attr('data-sku');
+                    var cartId = CCRZ.pagevars.queryParams.cartID ? CCRZ.pagevars.queryParams.cartID  : CCRZ.pagevars.queryParams.cartId;                   
+                    var quantity = 1;
+                    var price =  $(this).attr('data-price');
+                    productDetailMap['SKU'] = sku;
+                    productDetailMap['Quantity'] = quantity;                    
+                    productDetailMap['CartId'] = cartId;
+                    productDetailMap['price'] = price;
+                    var remoteCall = _.extend(CCRZ.RemoteInvocation,{className:'cc_ecomm_ProductsSectionController'});
+                    remoteCall.invokeCtx(
+                        'addToCartOO', productDetailMap,
+                        function(resp){
+                            if(resp && resp.success){
+                                CCRZ.pubSub.trigger('cartChange', resp.data['cartId']);
+                                 $('.action-'+sku).addClass('hidden'); 
+                            } else {
+                                var productType = resp.data;
+                                var message = '<fieldset class="confirmOrder"><p style="font-size: 14px;">'+'A '+productType+ ' '+ CCRZ.pagevars.pageLabels['OO_AddToCart_Validate'] +'</p></fieldset>';
+                                $('.product_detail_item').append(message);
+                            }
+                        },{buffer:false,escape:false,nmsp:false});                  
+            });
+            CCRZ.pubSub.on('view:cartView:refresh', function(theView) { 
+                var skuId = CCRZ.pagevars.queryParams.sku ? CCRZ.pagevars.queryParams.sku : undefined;
+                var remoteCallSage = _.extend(CCRZ.RemoteInvocation,{className:'cc_ecomm_ProductsSectionController'});
+                    remoteCallSage .invokeCtx(
+                        'checkAddOnProducts',skuId,
+                        function(resp){                           
+                            if(resp && resp.success){
+                                   var respDataList = resp.data;
+                                   var cartItemDetails = CCRZ.cartView.cartmodel.attributes.cartItems;
+                                   var isBasePresent = false;
+                                   $.each( cartItemDetails , function( cartKey, cartValue ) {
+                                       
+                                       if(cartValue.mockProduct.sku==skuId )
+                                       {
+                                           isBasePresent = true;
+                                       }
+                                   });
+                                   if(isBasePresent == true)
+                                   {
+                                       $.each( respDataList, function( key, value ) {
+                                           var isAddOnpresent =  false;  
+                                           $.each( cartItemDetails , function( cartKey, cartValue ) {
+                                               if(cartValue.mockProduct.sku == value)
+                                               {
+                                                   isAddOnpresent = true;                                                    
+                                               }
+                                           });
+                                           if(isAddOnpresent == false){
+                                               $('.action-'+value).removeClass('hidden');
+                                           }
+                                       });
+                                   }
+                                
+                            }                             
+                        },{buffer:false,escape:false,nmsp:false});    
+                });
+     });
+</script>
+</apex:component>

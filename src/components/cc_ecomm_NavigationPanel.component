@@ -1,0 +1,65 @@
+<!--
+<Summary>
+--------------------------------------------------------------------------------------------------------------------
+Author                            Date                        Description
+---------------------------------------------------------------------------------------------------------------------
+Kshipra                         22 Nov 2016                    To hide the sort option in product list page
+-----------------------------------------------------------------------------------------------------------------------
+-->
+<apex:component allowDML="true">
+<script id="cc_ecomm_NavigationPanel" type="text/template">
+  <div class="pagination_row_1">
+   <div class="pagination_container">
+    <p>
+     {{pageLabelMap 'ProductsInc_Items'}} {{startIndex}} - {{endIndex}} {{pageLabelMap 'ProductsInc_of'}} {{totalCount}} {{pageLabelMap 'ProductsInc_total'}}
+    </p>
+    <span class="page_links">
+     {{pageLabelMap 'ProductDetailsInc_Page'}}
+     {{#if hasPrevious}}
+      <a href="#" class="firstAction">{{pageLabelMap 'ProductsInc_First'}}</a>
+      <a href="#" class="previousAction pageAction">{{pageLabelMap 'ProductsInc_Previous'}}</a>
+     {{/if}}
+
+     {{#for this.startPage this.lastPage 1}}
+      {{#ifEquals this ../currPage}}
+       {{safeQuote this}}
+      {{else}}
+       <a href="#" class="gotoPage" data-id="{{safeQuote this}}">{{safeQuote this}}</a>
+      {{/ifEquals}}
+     {{/for}}
+
+     {{#if hasNext}}
+      <a href="#" class="nextAction pageAction">{{pageLabelMap 'ProductsInc_Next'}}</a>
+      <a href="#" class="lastAction">{{pageLabelMap 'ProductsInc_Last'}}</a>
+     {{/if}}
+    </span>
+    <span class="right_align">
+      {{pageLabelMap 'ProductsInc_show'}}
+      <select class="sizeAction">
+      {{#each this.itemsPerPagePLValues}}
+       <option value="{{safeQuote this}}" {{#ifEquals ../pageSize this}} selected {{/ifEquals}}>{{safeQuote this}}</option>
+      {{/each}}
+      </select>
+      {{pageLabelMap 'ProductsInc_PerPage'}}
+    </span>
+   </div>
+  </div>
+  <div class="pagination_row_2 hidden">
+   <div class="pagination_container">
+    {{pageLabelMap 'ProductsInc_Sortby'}}&#160;
+    <a href="#" class="resortAction" data-id="{{#if wasSearch}}ranking{{else}}sequence{{/if}}">{{pageLabelMap 'ProductsInc_Relevance'}}</a>&#160;|&#160;
+    <a href="#" class="resortAction" data-id="name">{{pageLabelMap 'ProductsInc_Name'}}</a>&#160;|&#160;
+    <a href="#" class="resortAction" data-id="startDate">{{pageLabelMap 'ProductsInc_Newest'}}</a>&#160;|&#160;
+    <a href="#" class="resortAction" data-id="price">{{pageLabelMap 'Price'}}</a>
+   </div>
+  </div>
+ </script>
+ 
+  <!-- Hiding sort by --> 
+   <script type="text/javascript">
+   
+   jQuery(function($){
+       CCRZ.uiProperties.navigatePaginationView.desktop.tmpl='cc_ecomm_NavigationPanel';   
+     });
+    </script>
+</apex:component>

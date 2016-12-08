@@ -1,0 +1,23 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" extends="c:custCommGenericComponent" controller="CommunityUtilities">
+	<!-- SF Lightning Design System -->
+    <c:requireLightningDesignSystem />
+	<!-- Attributes for the Icons -->
+    <aura:attribute name="buttonIconName" type="String" description="SLDS Icon Name e.g settings" default="" access="Global"/>
+    <aura:attribute name="buttonIconType" type="String" description="SLDS Icon type e.g utility" default="" access="Global"/>
+    <aura:attribute name="changePaymentMethodButtonLabel" type="String" description="Label for the change payment method button" default="" access="Global" />
+    <aura:attribute name="subscribeButtonLabel" type="String" description="Label for the Pay Now button" default="" access="Global" />
+    
+    <aura:attribute name="linkRef" type="String" description="Href for the icon" default="" access="Private"/>
+    <aura:attribute name="showPaymentChangeButton" type="Boolean" description="Should the change payment method URL be shown" default="false" access="Private" />
+    <aura:attribute name="payNowURL" type="String" description="The PayNow URL" default="" access="Private" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{! v.showPaymentChangeButton }">
+    	<c:custCommButton linkRef="{! v.linkRef }" press="{!c.redirectToMakeAPayment}" >{! v.changePaymentMethodButtonLabel }</c:custCommButton>
+   	</aura:if>
+    
+    <aura:if isTrue="{! v.payNowURL != '' }">
+        <c:custCommButton linkRef="{! v.linkRef }" press="{! c.redirectToPayNow }" >{! v.subscribeButtonLabel }</c:custCommButton>
+    </aura:if>
+</aura:component>

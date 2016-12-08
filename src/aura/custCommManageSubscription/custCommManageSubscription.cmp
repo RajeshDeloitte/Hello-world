@@ -1,0 +1,12 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="CommunityUtilities" extends="c:custCommGenericComponent" description="Navigates the user to the My Subscriptions page. Is enabled or disabled based on the Sage Customer Community - Manage Subscription permission set." access="GLOBAL">
+    <aura:attribute name="buttonIconName" type="String" description="SLDS Icon Name e.g settings" default=""/>
+    <aura:attribute name="buttonIconType" type="String" description="SLDS Icon type e.g utility" default=""/>
+    <aura:attribute name="showButton" type="boolean" default="false" description="Should the button be shown? Button is hidden or shown depending on whether the user has the required permission set." access="PRIVATE"/>
+    <aura:attribute name="linkRef" type="String" description="Href for the icon" default=""/>
+   	
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />
+    
+    <aura:if isTrue="{! v.showButton }">
+        <c:custCommButton linkRef="{! v.linkRef }" press="{! c.navigate }">{!$Label.c.Customer_Community_Manage_Subscription_Label}</c:custCommButton>
+    </aura:if>
+</aura:component>

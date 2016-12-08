@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="trackingCode" type="String" description="Tracking Code"></aura:attribute>
+    <aura:attribute name="missingTrackingCodeMessage" type="String" description="Error Message to show when Tracking code isn't provided" default="Set Tracking Code for Google Analytics in Builder!"></aura:attribute>
+    <aura:attribute name="gaProxyUrl" type="String" description="URL for Google Analytics Proxy to get around Locker Service issue with GA. It will get trackingCode in URL param." default="/CommunityGoogleAnalyticsProxy"></aura:attribute>
+    <aura:attribute name="gaFrameLoaded" type="Boolean" default="false" access="private"></aura:attribute>
+    <aura:attribute name="debug" type="Boolean" description="Flag to Show Debug Data in Console" default="false"></aura:attribute>
+    <aura:handler event="c:CommunityGoogleAnalyticsEvent" action="{!c.handleGAEvent}"/>	
+    <aura:if isTrue="{!v.trackingCode !=null}">
+        <iframe class="hidden" aura:id="analyticsFrame" src="{! v.gaProxyUrl + '?trackingCode=' + v.trackingCode}" height="0" width="0"/>
+    	<aura:set attribute="else">
+            <ui:message severity="error">{!v.missingTrackingCodeMessage}</ui:message>
+        </aura:set>
+    </aura:if> 	
+</aura:component>

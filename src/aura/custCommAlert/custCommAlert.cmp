@@ -1,0 +1,13 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes" description="Generic component used to display an alert in the community. Interaction with this component is via Application events.">
+    
+    <aura:attribute name="alerts" type="Object[]" description="List of alerts" access="PRIVATE"/>
+    
+    <aura:handler event="c:custCommShowMessage" action="{! c.addMessage }" />
+	<aura:handler event="c:custCommHideMessage" action="{! c.removeMessage }" />
+    
+    <div class="">
+        <aura:iteration var="alert" items="{! v.alerts }">
+            <c:alert show="true" data="{! alert.identifier }" theme="{! alert.type }" onClose="{! c.closeMessage }" class="community-alert-margin-top" assistiveText="{! alert.message }">{! alert.message }</c:alert>
+        </aura:iteration>
+    </div>
+</aura:component>

@@ -1,0 +1,9 @@
+.THIS iframe {
+    pointer-events : all;
+    width: 100%;
+    border: lightgray solid 1px;
+}
+
+.THIS .blank-space {
+    margin-top:1.5em;
+}

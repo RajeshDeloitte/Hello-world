@@ -1,0 +1,6 @@
+<aura:documentation>
+	<aura:description>Button to create a Case requesting the cancelation of Sage subscription.</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+	</aura:example>
+</aura:documentation>

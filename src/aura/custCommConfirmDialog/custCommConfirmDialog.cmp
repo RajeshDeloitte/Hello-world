@@ -1,0 +1,43 @@
+<!--
+@description see //aura:component[description]
+@author Arturs Gusjko <arturs.gusjko@bettercloudsolutions.co.uk>
+-->
+<aura:component access="GLOBAL" description="Customer Community modal with header, body and two buttons (confirmation and rejection).">
+
+    <c:requireLightningDesignSystem />
+    
+    <aura:attribute name="isVisible" type="Boolean" default="false" description="Should the modal be shown?" access="private" />
+    
+    <aura:attribute name="confirmLabel" default="Confirm" type="String" description="The label of confirm button at the bottom of the page." access="GLOBAL"/>
+    <aura:attribute name="rejectLabel" default="Reject" type="String" description="The label of the reject button at the bottom of the page." access="GLOBAL"/>
+    <aura:attribute name="headerLabel" default="" type="String" description="The title of the confirmation dialog." access="GLOBAL" />
+
+    <aura:registerEvent name="dialogConfirmed" type="c:custCommConfirmDialogAnsweredYes" />
+    <aura:registerEvent name="dialogRejected" type="c:custCommConfirmDialogAnsweredNo" />
+
+    <aura:method name="show" description="Displays the confirmation dialog." access="GLOBAL" />
+    <aura:method name="hide" description="Hides the confirmation dialog." access="GLOBAL" />
+
+    <div class="{! 'slds-modal slds-fade-in-open' + (v.isVisible ? ' slds-show' : ' slds-hide') }" aria-hidden="false" role="dialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <ui:button class="slds-button slds-button--icon-inverse slds-modal__close" press="{! c.reject }">
+                    <c:svg xlinkHref="/sfsites/c/resource/SLDS104/assets/icons/action-sprite/svg/symbols.svg#close" class="slds-button__icon slds-button__icon--large" ariaHidden="true" />
+                    <span class="slds-assistive-text">{! v.rejectLabel }</span>
+                </ui:button>
+                <h2 class="slds-text-heading--medium">{! v.headerLabel }</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div>
+                    {! v.body }
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <ui:button class="slds-button slds-button--neutral" press="{! c.reject }">{! v.rejectLabel }</ui:button>
+                <ui:button class="slds-button slds-button--neutral slds-button--brand" press="{! c.confirm }">{! v.confirmLabel }</ui:button>
+            </div>
+        </div>
+    </div>
+    <div class="{! 'slds-backdrop slds-backdrop--open' + (v.isVisible ? ' slds-show' : ' slds-hide') }"></div>
+
+</aura:component>

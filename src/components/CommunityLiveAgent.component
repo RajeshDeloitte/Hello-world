@@ -1,0 +1,111 @@
+<apex:component rendered="true" controller="CommunityLiveAgentController">
+    <apex:form >
+        <html>
+            <head>
+                <script type='text/javascript' src='https://c.la1-c1-lon.salesforceliveagent.com/content/g/js/35.0/deployment.js'></script>
+                <script type='text/javascript'>
+                    // Added JSINHTMLENCODE functionality as recommended by Checkmarx Security Scanner so that strings are interpreted
+                    // as data and not as markup to prevent Cross Site Scripting (XSS)
+                    // Check whether the user's first name is populated before using it to set the visitor name
+                    
+                    if ('{!JSINHTMLENCODE(userFirstName)}' != '') {
+                        // NB - The space before the userFirstName parameter below is to allow the Auto Greeting to work when the visitor name is not set.
+                        liveagent.setName(' {!JSINHTMLENCODE(userFirstName)}');
+                    };
+                
+                liveagent.addCustomDetail('Customer Id', '{!JSINHTMLENCODE(userContact)}').saveToTranscript('Contact');
+                liveagent.addCustomDetail('Customer Name', '{!JSINHTMLENCODE(userName)}').saveToTranscript('Customer_Name__c');
+                liveagent.findOrCreate('Contact').map('Id', 'Customer Id', true, true, false);
+                liveagent.init('https://d.la1-c1-lon.salesforceliveagent.com/chat', '{!JSINHTMLENCODE(deploymentId)}', '{!JSINHTMLENCODE(orgId)}');
+                
+                </script>  
+            </head>
+            
+            <body>
+                
+                <tr>
+                    
+                    <!-- Dublin Start-->
+                    <apex:outputPanel rendered="{!IF((salesOffice='Dublin CBC' && userLanguage='en_US'),true,false)}">
+                        <td>
+                            
+                            <img id="{!JSINHTMLENCODE(dublinOnline)}" style="display: none; border: 0px none; cursor: pointer; height: 81px; width: auto; margin: 6px 0 9px 0;" 
+                                 onclick="liveagent.startChat('{!JSINHTMLENCODE(dublinId)}')" src="{!$Resource.LiveChatOnline}" />
+                            
+                            <img id="{!JSINHTMLENCODE(dublinOffline)}" style="display: none; border: 0px none; height: 81px; width: auto; margin: 6px 0 9px 0;"
+                                 src="{!$Resource.LiveChatOffline}"/>
+                            
+                            <script type="text/javascript">
+                            if (!window._laq) { window._laq = []; }
+                            
+                            window._laq.push(function(){liveagent.showWhenOnline('{!JSINHTMLENCODE(dublinId)}', document.getElementById('{!JSINHTMLENCODE(dublinOnline)}'));
+                                                        liveagent.showWhenOffline('{!JSINHTMLENCODE(dublinId)}', document.getElementById('{!JSINHTMLENCODE(dublinOffline)}'));
+                                                       });</script>
+                        </td>
+                    </apex:outputPanel>
+                    <!-- Dublin End-->
+                    
+                    <!-- Atlanta French(Canadian) Start-->
+                    <apex:outputPanel rendered="{!IF((salesOffice='Atlanta CBC' && userLanguage='fr_CA'),true,false)}">
+                        <td>
+                            
+                            <img id="{!JSINHTMLENCODE(atlantafrenchcanadianOnline)}" style="display: none; border: 0px none; cursor: pointer; height: 81px; width: auto; margin: 6px 0 9px 0;" 
+                                 onclick="liveagent.startChat('{!JSINHTMLENCODE(atlantafrenchcanadianId)}')" src="{!$Resource.LiveChatOnline}"/>
+                            
+                            <img id="{!JSINHTMLENCODE(atlantafrenchcanadianOffline)}" style="display: none; border: 0px none; height: 81px; width: auto; margin: 6px 0 9px 0;"
+                                 src="{!$Resource.LiveChatOffline}"/>
+                            
+                            <script type="text/javascript">
+                            if (!window._laq) { window._laq = []; }
+                            window._laq.push(function(){liveagent.showWhenOnline('{!JSINHTMLENCODE(atlantafrenchcanadianId)}', document.getElementById('{!JSINHTMLENCODE(atlantafrenchcanadianOnline)}'));
+                                                        liveagent.showWhenOffline('{!JSINHTMLENCODE(atlantafrenchcanadianId)}', document.getElementById('{!JSINHTMLENCODE(atlantafrenchcanadianOffline)}'));
+                                                       });</script>
+                        </td>
+                    </apex:outputPanel>
+                    <!-- Atlanta French(Canadian) End-->
+                    
+                    <!-- Atlanta Start-->
+                    <apex:outputPanel rendered="{!IF((salesOffice='Atlanta CBC' && userLanguage='en_US'),true,false)}">
+                        <td>
+                            
+                            <img id="{!JSINHTMLENCODE(atlantaOnline)}" style="display: none; border: 0px none; cursor: pointer; height: 81px; width: auto; margin: 6px 0 9px 0;" 
+                                 onclick="liveagent.startChat('{!JSINHTMLENCODE(atlantaId)}')" src="{!$Resource.LiveChatOnline}"/>
+                            
+                            <img id="{!JSINHTMLENCODE(atlantaOffline)}" style="display: none; border: 0px none; height: 81px; width: auto; margin: 6px 0 9px 0;"
+                                 src="{!$Resource.LiveChatOffline}"/>
+                            
+                            <script type="text/javascript">
+                            if (!window._laq) { window._laq = []; }
+                            window._laq.push(function(){liveagent.showWhenOnline('{!JSINHTMLENCODE(atlantaId)}', document.getElementById('{!JSINHTMLENCODE(atlantaOnline)}'));
+                                                        liveagent.showWhenOffline('{!JSINHTMLENCODE(atlantaId)}', document.getElementById('{!JSINHTMLENCODE(atlantaOffline)}'));
+                                                       });</script>
+                        </td>
+                    </apex:outputPanel>
+                    <!-- Atlanta End-->
+                    
+                    <!-- Sage Default Start -->
+                    <apex:outputPanel rendered="{!IF(AND(salesOffice!='Atlanta CBC', salesOffice!='Dublin CBC'),true,false)}">
+                        <td>
+                            
+                            <img id="{!JSINHTMLENCODE(defaultOnline)}" style="display: none; border: 0px none; cursor: pointer; height: 81px; width: auto; margin: 6px 0 9px 0;" 
+                                 onclick="liveagent.startChat('{!JSINHTMLENCODE(defaultId)}')" src="{!$Resource.LiveChatOnline}"/>
+                            
+                            <img id="{!JSINHTMLENCODE(defaultOffline)}" style="display: none; border: 0px none; height: 81px; width: auto; margin: 6px 0 9px 0;"
+                                 src="{!$Resource.LiveChatOffline}"/>
+                            
+                            <script type="text/javascript">
+                            if (!window._laq) { window._laq = []; }
+                            
+                            window._laq.push(function(){liveagent.showWhenOnline('{!JSINHTMLENCODE(defaultId)}', document.getElementById('{!JSINHTMLENCODE(defaultOnline)}'));
+                                                        liveagent.showWhenOffline('{!JSINHTMLENCODE(defaultId)}', document.getElementById('{!JSINHTMLENCODE(defaultOffline)}'));
+                                                       });</script>
+                        </td>
+                    </apex:outputPanel>
+                    <!-- Sage Default End -->
+                    
+                </tr>
+            </body>
+            
+        </html>
+    </apex:form>
+</apex:component>

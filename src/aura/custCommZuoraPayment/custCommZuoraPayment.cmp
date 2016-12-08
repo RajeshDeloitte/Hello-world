@@ -1,0 +1,84 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="ZuoraPaymentPageUtility" extends="c:custCommGenericComponent">
+	<!-- SF Lightning Design System -->
+    <c:requireLightningDesignSystem />
+    <!-- Zuora Javascript Library -->
+    <!-- <c:requireZuoraJSLibrary afterLoadScript="{!c.afterZuoraJSLoaded}"/>-->
+    <!--<ltng:require scripts="{!$Resource.zuora_Sandbox_v1_3_0}" afterScriptsLoaded="{!c.afterZuoraJSLoaded}"/> -->
+	<!-- Attribute that specifies the Url parameter that we should use to redirect the user after the payment method is changed -->
+    <!-- <aura:attribute name="finishPage" type="String" default="finishPage"/>
+    <aura:attribute name="ZXD" type="Object" access="PRIVATE" />
+    <aura:attribute name="Zuora" type="Object" access="PRIVATE" /> -->
+    <!-- After the Iframe is submitted and the callback page is issued 
+		an event will fire to let us know that we need to redirect the top window to the page where the request originated -->
+    <!-- <aura:handler event="c:custCommRedirectAfterZuoraCallback" action="{!c.handleRedirectAfterZuoraCallback}"/> -->
+    <!-- <aura:attribute name="zuoraLoaded" type="Boolean" default="false"/>
+    <aura:attribute name="iframeLoaded" type="Boolean" default="false"/>
+    <aura:attribute name="href" type="String" default="https://sagegroup-\-sage1dev.cs87.my.salesforce.com/" /> -->
+    
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  -->
+    <aura:attribute name="achUrl" type="String" access="private" />
+    <aura:attribute name="creditCardUrl" type="String" access="private" />
+
+    <aura:attribute name="achIframeStyle" type="String" access="private" />
+    <aura:attribute name="creditCardIframeStyle" type="String" access="private" />
+
+    <aura:attribute name="isVisible" type="Boolean" default="false" access="private" />
+
+    <aura:attribute name="isLimitReached" type="Boolean" required="false" default="false" access="private" description="Determines if the submit limit reached and an error message should be displayed." />
+
+    <aura:handler name="init" value="{!this}" action="{!c.initPage}"/>
+
+    <aura:handler name="change" value="{!v.isLimitReached}" action="{!c.limitReached}"/>
+            
+    
+    <!--
+    <c:custCommTabs >
+        <c:custCommTab label="{!$Label.c.ACHTabLabel}" active="true">
+            <span>"{!$Label.c.ACHTabLabel}"</span>
+            <div id="ach_payment" ></div>   
+            <iFrame aura:id="zuora_iframe"></iFrame>
+            <c:custCommButton press="{!c.submitACHZuoraForm}" label="Submit"/>
+		</c:custCommTab>
+        <c:custCommTab label="{!$Label.c.CreditCardTabLabel}" >
+            <span>"{!$Label.c.CreditCardTabLabel}"</span>
+            <!|- style added temporarily -|>
+            <div id="creditCard_payment" style="height:550px;"></div>
+            <c:custCommButton press="{!c.submitCreditCardZuoraForm}" label="Submit"/>
+        </c:custCommTab>
+    </c:custCommTabs> -->
+
+    <div aura-id="container" class="{! v.isVisible ? '' : 'slds-hide' }">
+        <c:custCommTabs >
+            <c:custCommTab label="{!$Label.c.ACHTabLabel}" active="true">
+                <!-- <div><span>"{!$Label.c.ACHTabLabel}"</span></div> -->
+                <iframe aura:id="zuora_ach_iframe" src="{! v.achUrl }" style="{! v.achIframeStyle }" scrolling="no"/>
+                
+                <div class="slds-grid slds-grid--pull-padded blank-space">
+                  <div class="slds-col--padded">
+                    <c:custCommButton press="{!c.submitACHZuoraForm}" label="Submit" disabled="{! v.isLimitReached }" />
+                  </div>
+                  <div class="slds-col--padded">
+                    <c:custCommButton press="{!c.back}" label="Cancel"/>
+                  </div>
+                </div>
+            </c:custCommTab>
+            <c:custCommTab label="{!$Label.c.CreditCardTabLabel}" >
+                <!-- <div><span>"{!$Label.c.CreditCardTabLabel}"</span></div> -->
+                <!-- style added temporarily -->
+                <!-- <div id="creditCard_payment" style="height:550px;"></div> -->
+                <iframe aura:id="zuora_creditcard_iframe" src="{! v.creditCardUrl }" style="{! v.creditCardIframeStyle }" scrolling="no"/>
+                
+                <div class="slds-grid slds-grid--pull-padded blank-space">
+                  <div class="slds-col--padded">
+                    <c:custCommButton press="{!c.submitCreditCardZuoraForm}" label="Submit" disabled="{! v.isLimitReached }" />
+                  </div>
+                  <div class="slds-col--padded">
+                    <c:custCommButton press="{!c.back}" label="Cancel"/>
+                  </div>
+                </div>
+            </c:custCommTab>
+        </c:custCommTabs>
+
+        
+    </div>
+</aura:component>

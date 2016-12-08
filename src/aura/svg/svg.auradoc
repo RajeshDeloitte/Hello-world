@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>
+        <p>As of 2016-05-11 Lightning Components do not support svg icons. This component enables svg support.</p>
+    </aura:description>
+    <aura:example name="simpleSVGIcon" ref="c:svgExampleIcon" label="Single SVG Icon">
+        <p>This example demonstrates the use of user icon</p>
+    </aura:example>
+	<aura:example name="simpleSVGButton" ref="c:svgExampleButton" label="Single SVG Button">
+		<p>This example demonstrates the use of a close button</p>
+	</aura:example>
+</aura:documentation>

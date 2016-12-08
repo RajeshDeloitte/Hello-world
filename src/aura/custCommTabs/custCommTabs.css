@@ -1,0 +1,7 @@
+.THIS .slds-tabs--default__item.slds-active .slds-tabs--default__link{
+    border-color : #00DC00;
+}
+
+.THIS .slds-tabs--default__item .slds-tabs--default__link:focus{
+    border-color : #00DC00;
+}

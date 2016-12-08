@@ -1,0 +1,9 @@
+<apex:page standardController="Case">
+  
+  <apex:sectionHeader title="Entitlement Update - {!Case.Account.Name}"></apex:sectionheader>
+  
+  <flow:interview name="Entitlements_Select_Entitlement_Type" finishlocation="/{!Case.Id}">
+    <Apex:param name="var_AccountId" value="{!Case.AccountId}"></apex:param>
+  </flow:interview>
+  
+</apex:page>

@@ -1,0 +1,3 @@
+<apex:page controller="CommunityMyAccountController" title="Account Details" standardStylesheets="true" tabStyle="Account" action="{!getMyAccount}">
+
+</apex:page>

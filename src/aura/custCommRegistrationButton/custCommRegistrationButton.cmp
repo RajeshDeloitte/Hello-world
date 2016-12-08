@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" extends="c:custCommGenericComponent" access="global" >
+	<aura:attribute name="customPermissionName" default="Unauthenticated_User" type="String" required="true" access="GLOBAL"
+                    description="Name of the custom permission that the user should have assigned to see the button"/>
+    <aura:attribute name="label" default="Register" type="String" description="Label for button" required="true" access="GLOBAL"/>
+    <aura:attribute name="registrationUrl" type="String" description="Registration Url" required="true" access="GLOBAL"/>
+    <!-- Attributes for the Icons -->
+    <aura:attribute name="buttonIconName" type="String" description="SLDS Icon Name e.g settings" default=""/>
+    <aura:attribute name="buttonIconType" type="String" description="SLDS Icon type e.g utility" default=""/>
+    <aura:attribute name="linkRef" type="String" description="Href for the icon" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <c:custCommPermissionBasedButton linkRef="{! v.linkRef }" label="{!v.label}" customPermissionName="{!v.customPermissionName}" press="{!c.navigateToRegitrationPage}"/>
+</aura:component>

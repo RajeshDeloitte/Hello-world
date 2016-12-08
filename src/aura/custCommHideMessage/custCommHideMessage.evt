@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Hides the message" access="GLOBAL">
+    <aura:attribute access="GLOBAL" name="identifier" type="String" description="A unique Id for the message" />
+</aura:event>

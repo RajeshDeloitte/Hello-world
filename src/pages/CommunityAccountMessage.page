@@ -1,0 +1,7 @@
+<apex:page standardController="Account" extensions="CommunityAccountMessageController" showHeader="false" sidebar="false" language="{!lang}">
+ <div style="text-align:center">
+    <h1 style="text-decoration:none;font-size:13px;">
+        {!$Label.Account_record_message} <a href="{!$Setup.CommunityHomePage__c.SubmitCase__c}{!id}" TARGET="_parent" style="text-decoration:none;color:#41A940;">{!$Label.Account_record_message2}</a>.
+    </h1>
+ </div>
+</apex:page>

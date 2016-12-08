@@ -1,0 +1,6 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+  <!-- Begin Default Content REMOVE THIS -->
+  <c:cc_ecomm_CheckoutContactInformation />
+  <!-- End Default Content REMOVE THIS -->
+  
+</apex:page>

@@ -1,0 +1,1 @@
+<aura:event type="APPLICATION" description="Fired by subscription management upgrade and cancellation buttons to notify each other about a newly created case." />

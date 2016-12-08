@@ -1,0 +1,23 @@
+.THIS, .THIS:visited {
+    background-color: t(colorBackgroundButtonBrand);
+    border : none;
+    color : t(colorTextButtonBrand);
+    font-weight : t(fontWeightBold);
+    /*padding : t(communityButtonPadding);*/
+    padding: 5px;
+    /*text-transform : uppercase;*/
+    width:100%;
+    font-size:1em;
+    transition: background .8s ease;
+    border-radius: 2px;
+}
+
+.THIS:hover, .THIS:active, .THIS:focus {
+    background-color: t(colorBackgroundButtonBrandHover);
+    color: t(colorTextButtonBrand);
+}
+
+.THIS:disabled {
+    background-color: t(colorBackgroundButtonBrandDisabled);
+    color: t(colorTextButtonBrandDisabled);
+}

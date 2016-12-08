@@ -1,0 +1,111 @@
+<!-- Pulkit Dua                      23/11/2016             Hiding the shipping information box from the checkout page (Step 2). -->
+
+
+<apex:component allowDML="true">
+ <script id="cc_ecomm_ShippingInformation-Desktop" type="text/template">
+  <form id="shipForm" class="margin_form shipForm">
+   <div class="alert alert-error messagingSection-Error" style="display: none"></div>
+   <div class="alert alert-info messagingSection-Info" style="display: none"></div>
+   <div class="alert alert-warning messagingSection-Warning" style="display: none"></div>
+  
+  
+   <!-- Shipping information component hidden from the step 2 of checkout page -->
+  
+  
+  
+  
+  <!-- <fieldset>
+    <legend>{{pageLabelMap 'CheckOut_ShipmentInformation'}}</legend>
+    <div class="shipping_payment">
+     <div class="row coso_ship_guide_text">{{pageLabelMap 'CheckOut_ShippingGuidingText'}}</div>
+     {{#ifDisplay 'SO.DsplShipOptions'}}
+      {{#if this.shippingMethods}}
+       <div class="row coso_ship_method">
+        <label>{{pageLabelMap 'CheckOut_ShippingMethod'}}</label>
+        <select class="shippingOptions" name="shippingMethod">
+         {{#each this.shippingMethods}}
+          <option value="{{this.uniqueId}}" {{#ifEquals ../shippingMethod this.uniqueId}} selected {{/ifEquals}}>
+           {{this.provider}} - {{pageLabelMap this.serviceName}}
+          </option>
+         {{/each}}
+        </select>
+       </div>
+       <div class="row coso_est_shipping">
+        <label>{{pageLabelMap 'CheckOut_EstimatedShipping'}}</label><span class="shippingCost"></span>
+       </div>
+      {{/if}}
+     {{/ifDisplay}}
+     {{#ifDisplay 'SO.DsplShipComplete'}}
+      <div class="row coso_ship_complete">
+       <label>{{pageLabelMap 'CheckOut_ShipComplete'}}</label>
+       <input type="checkbox" name="shipComplete" class="boxes" value="true" {{#if this.shipComplete}} checked {{/if}} />
+      </div>
+     {{/ifDisplay}}
+     {{#ifDisplay 'SO.DsplShipNotes'}}
+      <div class="row coso_ship_notes">
+       <label>{{pageLabelMap 'CheckOut_ShippingNotes'}}</label>
+       <textarea name="shippingInst" rows="6" class="shipnotes">{{this.shippingInst}}</textarea>
+      </div>
+     {{/ifDisplay}}
+     {{#ifDisplay 'SO.ShowReqDate'}}
+      <div class="row deliveryDateMessages" id="deliveryDateMessages"></div>
+      {{#unless this.requestedDateData.ApiError}}
+      <div class="row coso_ship_delivery_date">
+       <label>{{pageLabelMap 'Checkout_RequestedDeliveryDt'}}</label>
+       <input name="requestedDateStr" value="{{this.requestedDateStr}}" class="requestedDate">
+      </div>
+      {{/unless}}
+     {{/ifDisplay}}
+     <div class="row">{{pageLabelMap 'Checkout_Shipping_Conditions' }}</div>
+    </div>
+   </fieldset> -->
+   {{#if this.terms}}
+    <fieldset>
+     <legend class="coso_footer_tc">{{pageLabelMap 'Footer_TermsAndConditions'}}</legend>
+     <div class="shipping_payment">
+      {{#each this.terms}}
+       <div class="row shiping_payment_term">
+        <input type="checkbox" name="#" class="boxes terms"/>
+        <span>
+         <strong>{{this.title}}:</strong>
+         <p>{{unescape this.description}}</p>
+        </span>
+       </div>
+      {{/each}}
+     </div>
+    </fieldset>
+   {{/if}}
+   <p class="link_button coso_proceed shippingDetails">
+    <input class="button processBack" type="button" value="{{pageLabelMap 'Back'}}" alt="{{pageLabelMap 'Back'}}" />
+    <input class="button right proceed processShippingInfo disabled" type="button" disabled value="{{pageLabelMap 'CheckOut_AcceptAndProceed'}}" alt="{{pageLabelMap 'CheckOut_AcceptAndProceed'}}" />
+    <br/>
+   </p>
+  </form>
+
+ 
+ </script>
+  <script type="text/javascript">
+    jQuery(function($){
+        
+        CCRZ.uiProperties.ShippingView.desktop.tmpl='cc_ecomm_ShippingInformation-Desktop';
+        //CCRZ.cartCheckoutModel.attributes.preventShippingEdit = true; 
+        
+        Handlebars.registerHelper("hideShippingAddress", function(addressType){
+            
+            if(addressType == 'shipping')
+            {
+                return false;
+            }
+        });
+    });
+    </script>
+   <!-- <style type="text/css">
+        .shiping_payment_term
+        {
+        display:none;
+        }
+        
+    </style>-->
+   
+    
+</apex:component>

@@ -1,0 +1,4 @@
+<design:component label="Manage Subscription Button">
+	<design:attribute name="buttonIconName" label="Icon Name" description="SLDS Icon Name e.g. settings"/>
+    <design:attribute name="buttonIconType" label="Icon Type" description="SLDS Icon Type e.g. utility"/>
+</design:component>

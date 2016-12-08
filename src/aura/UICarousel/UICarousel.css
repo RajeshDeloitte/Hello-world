@@ -1,0 +1,73 @@
+.THIS.slider {
+  position: relative;
+  overflow: hidden;
+}
+.THIS .slider__slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.51, 0.92, 0.24, 1);
+  transition: -webkit-transform 0.3s cubic-bezier(0.51, 0.92, 0.24, 1);
+  transition: transform 0.3s cubic-bezier(0.51, 0.92, 0.24, 1);
+  transition: transform 0.3s cubic-bezier(0.51, 0.92, 0.24, 1), -webkit-transform 0.3s cubic-bezier(0.51, 0.92, 0.24, 1);
+  will-change: transform;
+}
+
+.THIS .slider__slide {
+  float: left;
+  background-size: cover; 
+  height: inherit;
+}
+
+.THIS .slider__dots {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  bottom: 1.5em;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.THIS .slider__dot, .THIS .slider__indicator {
+  display: block;
+  margin: 0 0.5em;
+  width: 1em;
+  height: 1em;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+}
+
+.THIS .slider__indicator {
+  position: absolute;
+  background: white;
+  width: auto;
+}
+
+.THIS .slider__indicator--left {
+  -webkit-transition: left 0.3s cubic-bezier(0.51, 0.92, 0.24, 1.15), right 0.3s 0.1s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  transition: left 0.3s cubic-bezier(0.51, 0.92, 0.24, 1.15), right 0.3s 0.1s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+}
+
+.THIS .slider__indicator--right {
+  -webkit-transition: left 0.3s 0.1s cubic-bezier(0.51, 0.92, 0.24, 1.15), right 0.3s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  transition: left 0.3s 0.1s cubic-bezier(0.51, 0.92, 0.24, 1.15), right 0.3s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+}
+
+.THIS.slider {
+  max-height:350px;
+}
+
+.THIS.slider .slider__slide .caption {
+    position: absolute;
+    top: 0;
+    padding: 2em;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+}
+
+.THIS.slider .slider__slide img{
+    width:100%;
+}

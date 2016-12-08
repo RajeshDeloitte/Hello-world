@@ -1,0 +1,5 @@
+<!--
+@description see //aura:event[description]
+@author Arturs Gusjko <arturs.gusjko@bettercloudsolutions.co.uk>
+-->
+<aura:event type="COMPONENT" description="Internal Confirmation Dialog event that is fired when the message is confirmed." access="GLOBAL" />

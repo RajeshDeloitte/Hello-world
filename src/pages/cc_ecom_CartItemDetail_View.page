@@ -1,0 +1,14 @@
+<!--
+<Summary>
+--------------------------------------------------------------------------------------------------------------------------------
+Author                                  Date                                            Description
+
+---------------------------------------------------------------------------------------------------------------------------------
+Rajesh Kumar                           09/11/2016                       Display User based and Usage based Prices for Sage 30  Product at Cart Page.
+
+-->
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+<!-- Ecom-263 US : User based and usage based pricing for product Sage 30   -->
+<c:cc_ecomm_CartItemDetail />
+<c:cc_ecomm_CartDetail_ActionTotalsView />
+</apex:page>

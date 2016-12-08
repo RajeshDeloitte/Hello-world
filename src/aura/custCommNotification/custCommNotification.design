@@ -1,0 +1,7 @@
+<design:component label="Notification">
+    <design:attribute name="text" label="Text in Alert" description="Text of the alert" />
+    <design:attribute name="theme" label="Theme" description="Theme of the alert" dataSource="success,error,offline" />
+    <design:attribute name="url" label="URL" description="URL to navigate to when the alert is clicked" />
+    <design:attribute name="iconName" label="Icon Name" description="The name of the icon to use" />
+    <design:attribute name="iconType" label="Icon Type" description="The type of the icon to use" dataSource="utility,action,standard,doctype" />
+</design:component>

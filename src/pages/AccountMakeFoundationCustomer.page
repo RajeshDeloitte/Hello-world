@@ -1,0 +1,9 @@
+<apex:page standardController="Account">
+  
+  <apex:sectionHeader title="Entitlement: Make Foundation Customer - {!Account.Name}"></apex:sectionheader>
+  
+  <flow:interview name="Entitlements_Make_Foundation_Customer" finishlocation="/{!Account.Id}">
+    <Apex:param name="AccountId" value="{!Account.Id}"></apex:param>
+  </flow:interview>
+  
+</apex:page>

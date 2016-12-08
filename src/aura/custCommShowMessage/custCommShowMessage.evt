@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Triggered when an error occurs" access="GLOBAL">
+    <aura:attribute access="GLOBAL" required="true" name="message" type="String" description="The message to be displayed" />
+    <aura:attribute access="GLOBAL" required="true" name="type" type="String" description="Can be ether blank, success, error or offline" />
+    <aura:attribute access="GLOBAL" name="identifier" type="String" description="A unique Id for the error" />    
+</aura:event>

@@ -1,0 +1,4 @@
+<aura:tokens extends="force:base">
+	<aura:token name="communityButtonPadding" value="15px 0"/>
+    <aura:token name="communityAlertMargin" value="6px"/>
+</aura:tokens>

@@ -1,0 +1,7 @@
+<aura:component access="GLOBAL" extensible="true" abstract="true">
+    <aura:registerEvent name="showSpinner" type="c:custCommShowSpinner" />
+    <aura:registerEvent name="hideSpinner" type="c:custCommHideSpinner" />
+    <aura:registerEvent name="showMessage" type="c:custCommShowMessage" />
+    <aura:registerEvent name="hideMessage" type="c:custCommHideMessage" />
+	{! v.body }
+</aura:component>

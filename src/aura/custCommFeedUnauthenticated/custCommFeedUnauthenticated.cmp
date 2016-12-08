@@ -1,0 +1,11 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="CommunityUtilities" extends="c:custCommGenericComponent">
+	<aura:attribute name="customPermissionName" default="Unauthenticated_User" type="String" required="true" access="GLOBAL"
+                    description="Name of the custom permission that indicates if the User is unauthenticated or not"/>
+    <aura:attribute name="notAuthenticated" default="false" type="Boolean" description="Indicates if the current user is not authenticated" required="false" access="GLOBAL"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!v.notAuthenticated}">
+    	<forceChatter:feed type="Home"/>
+    </aura:if>
+</aura:component>

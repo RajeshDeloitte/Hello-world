@@ -1,0 +1,210 @@
+<apex:page controller="amp_sf_BillingInvoicePdfController" renderAs="pdf" applyHtmlTag="false" showHeader="false" sidebar="false">
+
+    <head>
+        <style type="text/css" media="print">
+    
+            @page {
+            margin-bottom: 100px;
+            margin-top: 180px;
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+            
+            div.header {
+                padding: 10px;
+                position: running(header);
+            }
+            
+            div.footer {
+                display: block;
+            padding: 5px;
+                position: running(footer);
+            }
+            
+            .right {
+                position: static;
+                right: 0px;
+                padding: 0px;
+            }
+            .left {
+                position: static;
+                left: 0px;
+                padding: 0px;
+            }
+            
+            .tableHeader {
+                background-color: #404040; 
+                color: white; 
+                text-align: center;
+            }
+
+            
+        </style>
+     </head>
+    
+<div class="header" style="font-family: SansSerif; " >
+
+    <div style="position:absolute; left:0px;" >
+        Sage Global Services Ltd<br />
+        North Park<br />
+        Newcastle<br />
+        NE13 9AA<br /><br />
+    </div>
+    
+    <div style="position:absolute; right:0px;" >
+        <apex:image url="{!URLFOR($Resource.amp_sf_Sage_logo)}" />
+    </div>
+    
+    
+    
+</div>
+
+<div class="footer" style="font-family: SansSerif; ">
+        Sage Global Services Ltd<br />
+        Registered in England: 1045967<br />
+        VAT Number: GB555 9096 05<br />
+</div>
+
+<div class="content" style="font-family: SansSerif; width: 100%; padding-top: 50px; padding-bottom: 50px;">
+
+        <br />
+        
+        <div style="text-align:left;">   
+            Attn: {!rewardPayment.Payment_Contact__r.Name}<br />
+            {!rewardPayment.Partner_Account__r.Name}<br />
+            {!rewardPayment.Partner_Account__r.BillingStreet}<br />
+            {!rewardPayment.Partner_Account__r.BillingCity}<br />
+            {!rewardPayment.Partner_Account__r.BillingState}<br />
+            {!rewardPayment.Partner_Account__r.BillingPostalCode}<br />
+            {!rewardPayment.Partner_Account__r.BillingCountry}<br />
+        </div>
+        
+        <br />
+        
+        <div style="text-align:right;">
+            Commission Invoice: {!invoiceNumber}<br />
+            <apex:outputText value="Commission Invoice Date: {0, date,dd/MM/yyyy}">
+                <apex:param value="{!TODAY()}" />
+            </apex:outputText>
+            <br />
+            <apex:outputText value="Commission Invoice Period: {0, date,dd/MM/yyyy} - {1, date,dd/MM/yyyy}">
+                <apex:param value="{!rewardPayment.Start_Date__c}" />
+                <apex:param value="{!rewardPayment.End_Date__c}" />
+            </apex:outputText>
+            <br />
+            VAT Number: {!rewardPayment.Partner_Account__r.VAT_Number__c}<br />
+        </div>
+        
+        <br />
+        <br />
+        
+        <div style="text-align:right;" >
+            <!-- Total Commission Due: {!rewardPayment.CurrencyIsoCode} {!rewardPayment.Total_Gross_Payment__c}  -->
+            <apex:outputText value="Total Commission Due: {!rewardPayment.CurrencyIsoCode} {0, number, ###,##0.00}">
+                <apex:param value="{!rewardPayment.Total_Gross_Payment__c}"/>
+            </apex:outputText>
+            <br />
+            Your commission will be paid by BACS using SAGE as a reference.<br />
+            If you have any queries about this invoice, please email us at {!$Label.SageAmplifinityEmailAddress}<br />
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center;" >
+            <apex:outputText value="Partner Commission Due" style="font-size: 150%; font-weight: bold;" />
+        </div>
+    <br />
+    
+        <table border="1" style="width:100%; border-collapse: collapse; text-align: center; border-style: double;">
+            <tr>
+                <td class="tableHeader">Total Number of Customers</td>
+                <td class="tableHeader">Total Reward Amount</td>
+            </tr>
+            <tr>
+                <td>{!rewardPayment.Total_Number_of_Customers__c}</td>
+                <td>
+                    <apex:outputText value="{!rewardPayment.CurrencyIsoCode} {0, number, ###,##0.00}">
+                        <apex:param value="{!rewardPayment.Total_Reward_Amount__c}"/>
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-bottom-style: none; border-left-style: none;"></td>
+                <td>
+                    <table border="1" style="width:100%; border-collapse: collapse; border-style: double;" >
+                        <tr>
+                            <td class="tableHeader">Vat @ {!rewardPayment.VAT_Rate__c} %</td>
+                            <td>
+                            
+                                <apex:outputText value="{!rewardPayment.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                    <apex:param value="{!rewardPayment.Total_Tax_Amount__c}"/>
+                                </apex:outputText>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tableHeader">Total</td>
+                            <td>
+                            
+                                <apex:outputText value="{!rewardPayment.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                    <apex:param value="{!rewardPayment.Total_Gross_Payment__c}"/>
+                                </apex:outputText>
+                                 
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style="text-align: center;" >
+            <apex:outputText value="Partner Commission Details"  style="font-size: 150%; font-weight: bold;"  />
+        </div>
+    <br />
+        <apex:dataTable value="{!relatedOppties}" var="item" border="1" width="100%" headerClass="tableHeader" style="text-align: center;" >
+            
+            <apex:column > 
+                <apex:facet name="header" >Advocate Name</apex:facet>
+                
+                    {!item.Referring_Partner_Contact__r.Name}
+                
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">Customer Name</apex:facet>
+                {!item.Account.Name}
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">Reward Amount</apex:facet>
+                
+                <apex:outputText value="{!rewardPayment.CurrencyIsoCode} {0, number, ###,##0.00}">
+                    <apex:param value="{!item.Reward_Amount__c}"/>
+                </apex:outputText>
+                 
+            </apex:column>
+            
+        </apex:dataTable>
+
+    
+</div>
+
+
+</apex:page>

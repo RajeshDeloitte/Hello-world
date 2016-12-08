@@ -1,0 +1,13 @@
+<apex:page >
+<apex:stylesheet value="{!URLFOR($Resource.sageLiveHeaderFooter_1209)}" />
+    <div class="homepage-top">
+        <h4>
+            <apex:outputText value="{!$Label.CommunityWelcome}"/>
+        </h4>
+        <p>
+            <apex:outputText value="{!$Label.CommunityText}" />
+        </p>
+        <br/>
+        <br/>
+    </div>
+</apex:page>
